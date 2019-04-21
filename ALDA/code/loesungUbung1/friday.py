@@ -75,50 +75,51 @@ def calculateYearlyDifference(day, month, year):
     daysOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     yearlyDifference = now.year - year
     allYearsOfDifference = []
-    theActualDay = datetime.date(year = year, month = month, day = day)
-    firstDayOfTheYear = daysOfTheWeek[(int(str(theActualDay - datetime.date(year = year, month = 1, day = 1))[0:2]) - 1) % 7]
-
-    # firstDayOfTheYear = daysOfTheWeek[(str(theActualDay - datetime.date(year = year, month = 1, day = 1))[0:2] + 0) % 7]
-    print(firstDayOfTheYear)
+    firstDayOfTheYear = daysOfTheWeek[datetime.date(year = year, month = 1, day = 1).weekday()]
     newYearToAppend, lastDayOfTheYearFirstYear = None, None
     for i in range(yearlyDifference):
         if i == 0:
             if (year + i) % 4 == 0:
-                newYearToAppend = generateYearWithStartingDay(True, daysOfTheWeek[(day -1) % 7])
+                newYearToAppend = generateYearWithStartingDay(True, firstDayOfTheYear)
             else:
-                newYearToAppend = generateYearWithStartingDay(False, daysOfTheWeek[(day -1) % 7])
+                newYearToAppend = generateYearWithStartingDay(False, firstDayOfTheYear)
             allYearsOfDifference.append(generateFullCalendarYear(newYearToAppend))
             lastDayOfTheYearFirstYear = allYearsOfDifference[-1]["December"][30][0]
         else:
             firstDayOfTheYear = (daysOfTheWeek.index(lastDayOfTheYearFirstYear) + 1) % 7 if i == 1 else (firstDayOfTheYear+1) % 7
-            print(lastDayOfTheYearFirstYear, firstDayOfTheYear)
             if (year + i) % 4 == 0:
                 newYearToAppend = generateYearWithStartingDay(True, daysOfTheWeek[firstDayOfTheYear])
             else:
                 newYearToAppend = generateYearWithStartingDay(False, daysOfTheWeek[firstDayOfTheYear])
             allYearsOfDifference.append(generateFullCalendarYear(newYearToAppend))
-            
 
     if len(allYearsOfDifference) == 0:
         if year % 4 == 0:
-            newYearToAppend = generateYearWithStartingDay(True, daysOfTheWeek[(day-1) % 7])
+            newYearToAppend = generateYearWithStartingDay(True, firstDayOfTheYear)
         else:
-            newYearToAppend = generateYearWithStartingDay(False, daysOfTheWeek[(day-1) % 7])
+            newYearToAppend = generateYearWithStartingDay(False, firstDayOfTheYear)
         allYearsOfDifference.append(generateFullCalendarYear(newYearToAppend))
 
     return allYearsOfDifference
 
+# TODO: Prettify years for later year counting!
+# def pretiffyYears
+
+
 def friday13thSince(day, month, year):
-    if datetime.datetime(year=year, month=month,day=day) > now:
+    askedDate = datetime.datetime(year=year, month=month,day=day)
+    if askedDate > now:
         raise ValueError("The date you entered is not valid")
     
     return calculateYearlyDifference(day, month, year)
 
 
-difference = friday13thSince(20,1,2019)
-print(difference)
-# for month in difference:
-#     print(month, "\n")
+
+difference = friday13thSince(22,3,2010)
+# print(difference)
+
+for month in difference:
+    print(month, "\n")
 
 
 
