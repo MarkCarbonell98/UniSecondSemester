@@ -102,24 +102,45 @@ def calculateYearlyDifference(day, month, year):
 
     return allYearsOfDifference
 
-# TODO: Prettify years for later year counting!
-# def pretiffyYears
-
+def countFridays13(passedYears, dayArg, monthArg, yearArg):
+    indexOfTheMonth = datetime.datetime(year=yearArg, month=monthArg,day=dayArg).month - 1
+    todaysDay, todaysMonth = now.day, now.month
+    friday13thCounter = 0
+    for yearlyIndex, year in enumerate(passedYears):
+        for monthlyIndex, month in enumerate(year):
+            for weekday, numberOfTheWeekday in year[month]:
+                if monthlyIndex >= indexOfTheMonth and yearlyIndex == 0 and numberOfTheWeekday >= dayArg:
+                    if weekday == "Friday" and numberOfTheWeekday == 13: friday13thCounter += 1
+                if yearlyIndex > 0 and yearlyIndex < len(passedYears):
+                    if weekday == "Friday" and numberOfTheWeekday == 13: friday13thCounter += 1
+                if yearlyIndex == len(passedYears) - 1 and monthlyIndex < todaysMonth-1 and numberOfTheWeekday < todaysDay:
+                    if weekday == "Friday" and numberOfTheWeekday == 13: friday13thCounter += 1
+                if monthlyIndex == todaysMonth-1 and yearlyIndex == len(passedYears)-1 and numberOfTheWeekday == todaysDay:
+                    if weekday == "Friday" and numberOfTheWeekday == 13: friday13thCounter += 1
+                    return friday13thCounter
 
 def friday13thSince(day, month, year):
     askedDate = datetime.datetime(year=year, month=month,day=day)
     if askedDate > now:
         raise ValueError("The date you entered is not valid")
-    
-    return calculateYearlyDifference(day, month, year)
+
+    wholeYearsToCount = calculateYearlyDifference(day, month, year)
+
+    result = countFridays13(wholeYearsToCount, day, month, year)
+
+    return f"The amount of fridays 13 since {day}/{month}/{year} is: {result}"
+
+
+difference = friday13thSince(20,5,1998) #mein Geburtstag! :P
+
+print(difference)
 
 
 
-difference = friday13thSince(22,3,2010)
-# print(difference)
 
-for month in difference:
-    print(month, "\n")
+
+# for month in difference:
+#     print(month, "\n")
 
 
 
