@@ -63,7 +63,7 @@ def friday13th():
         currentYear = allPossibleYears[i]
         print(f"Starting day: {currentYear['firstDay']}, is leap year {currentYear['isLeapYear']}, and the amount of Fridays 13th is: {totalCount[i]}")
     
-# friday13th()
+friday13th()
     
 # aufgabe 2c)
 
@@ -134,13 +134,5 @@ def friday13thSince(day, month, year):
 difference = friday13thSince(20,5,1998) #mein Geburtstag! :P
 
 print(difference)
-
-
-
-
-
-# for month in difference:
-#     print(month, "\n")
-
 
 
