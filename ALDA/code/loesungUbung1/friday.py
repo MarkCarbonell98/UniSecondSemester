@@ -131,7 +131,7 @@ def friday13thSince(day, month, year):
     return f"The amount of fridays 13 since {day}/{month}/{year} is: {result}"
 
 
-difference = friday13thSince(20,5,1998) #mein Geburtstag! :P
+difference = friday13thSince(1,1,1989) #mein Geburtstag! :P
 
 print(difference)
 
