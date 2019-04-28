@@ -5,19 +5,31 @@
 //program 1
 int main(int argc, char* argv[]) {
     int i = 0;
-    pid_t pid = fork();
-    if(fork() != 0) i++,printf("after first i++ (fork() != 0) pid = %d, i = %d \n\n",pid, i); //passing from 
-    if(i != 0) {
-        printf(" before fork(), (i != 0) pid = %d, i = %d \n\n",pid, i);
-        fork();
-        printf(" after fork(), (i != 0) pid = %d, i = %d \n\n",pid, i); 
+    if(fork() != 0) { // is it parent process ?
+        i++;
+        printf("first getpid() = %d, i = %d \n\n",getpid(), i);
     }
-    if(fork() != 0 || i != 0) i++, printf("after last i++ (fork() != 0 || i != 0) pid = %d, i = %d \n\n",pid, i);
-    if(fork() == 0 && i == 0) {
-        printf(" before fork(), (fork() == 0 && i == 0) pid = %d, i = %d \n\n",pid, i);
+    if(i != 0) { // is this a child of the parent process ?
+        printf("second before getpid() = %d, i = %d \n\n",getpid(), i);
         fork();
-        printf(" after fork(), (fork() == 0 && i == 0) pid = %d, i = %d \n\n",pid, i); 
+        printf("second after getpid() = %d, i = %d \n\n",getpid(), i); 
     }
+    if(fork() != 0 || i != 0) { //is this a parent process inside a child process ?
+        i++;
+        printf("third getpid() = %d, i = %d \n\n",getpid(), i);
+    }
+    if(fork() == 0 && i == 0) { // is this a child process inside a children process ?
+        printf(" fourth before getpid() = %d, i = %d \n\n",getpid(), i);
+        fork();
+        printf(" fourth after getpid() = %d, i = %d \n\n",getpid(), i); 
+    }
+    exit(0);
     return 0;
 }
+
+//prozesse
+
+/*
+    
+*/
 

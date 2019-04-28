@@ -5,9 +5,7 @@
 
 int main() {
     int i, j;
-    pid_t pid;
-
-    pid = fork();
+    pid_t pid = fork();
     if(pid == 0) {
         /*
             Kindprozess
