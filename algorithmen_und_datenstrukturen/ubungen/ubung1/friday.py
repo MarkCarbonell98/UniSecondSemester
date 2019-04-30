@@ -4,16 +4,19 @@
 # Der Anzahl der Schaltjahre seit dem Jahr 0 ergibt sich durch math.floor(aktuellesJahr/4). Die ist gleichzeitig die Anzahl an Tage dass pro Jahr addiert werden sollten, damit die Wochentage von dieses Jahr mit den von Vorherige Jahre korrekt zustimmen.
 
 
-# aufgabe 2b)
-def generateYear(isLeapYear):
+# aufgabe 2b) 
+# gibt ein dict mit aller Monate des Jahres und der entsprechende Anzahl an Tage zuruck
+def generateYear(isLeapYear): 
     months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"]
     totalDays = [31, 29, 31, 30, 31, 30, 31,31,30,31,30,31] if isLeapYear else [31, 28, 31, 30, 31, 30, 31,31,30,31,30,31]
     year = dict(zip(months, totalDays))
     return year
 
+# generiert ein Jahr, mit den extra keys firstDay, und isLeapYear.
 def generateYearWithStartingDay(isLeapYear, yearsFirstDay = "Monday"):
     return {"year": generateYear(isLeapYear), "firstDay": yearsFirstDay, "isLeapYear": isLeapYear}
 
+# generates a months as a list
 def generateMonth(year, month, firstDayOfTheMonth, daysOfTheWeek):
     monthlyCalendar, i, firstDayIndex = [], 1, daysOfTheWeek.index(firstDayOfTheMonth)
     while year[month] >= i:
@@ -22,6 +25,7 @@ def generateMonth(year, month, firstDayOfTheMonth, daysOfTheWeek):
         i += 1
     return monthlyCalendar 
 
+# generates a full year with the corresponding days for each month
 def generateFullCalendarYear(year):
     daysOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     yearlyCalendar, firstDayOfTheMonth = {}, year['firstDay']
@@ -35,6 +39,7 @@ def generateFullCalendarYear(year):
             yearlyCalendar[month] = generateMonth(year['year'], month, firstDayOfTheMonth, daysOfTheWeek)
     return yearlyCalendar
 
+# generates based on all posibilities, a list all the years and the corresponding months and days
 def generateAllPossibleYears():
     daysOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     isLeapYear = [True, False]
@@ -45,6 +50,7 @@ def generateAllPossibleYears():
         allPossibleYears.append(newlyAddedYear)
     return allPossibleYears
 
+# counts and shows the results of the fourteen possibilities
 def friday13th():
     allPossibleYearsCalendar, totalCount = [], []
     allPossibleYears = generateAllPossibleYears()
@@ -71,6 +77,7 @@ import datetime
 
 now = datetime.datetime.now()
 
+# generates the necessary amount of years between today and the given date.
 def calculateYearlyDifference(day, month, year):
     daysOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     yearlyDifference = now.year - year
@@ -102,6 +109,7 @@ def calculateYearlyDifference(day, month, year):
 
     return allYearsOfDifference
 
+# counts the number of friday 13 from the given date to now a days.
 def countFridays13(passedYears, dayArg, monthArg, yearArg):
     indexOfTheMonth = datetime.datetime(year=yearArg, month=monthArg,day=dayArg).month - 1
     todaysDay, todaysMonth = now.day, now.month
@@ -119,6 +127,7 @@ def countFridays13(passedYears, dayArg, monthArg, yearArg):
                     if weekday == "Friday" and numberOfTheWeekday == 13: friday13thCounter += 1
                     return friday13thCounter
 
+# show the results of the last two functions.
 def friday13thSince(day, month, year):
     askedDate = datetime.datetime(year=year, month=month,day=day)
     if askedDate > now:
