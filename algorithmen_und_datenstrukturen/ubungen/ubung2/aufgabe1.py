@@ -150,18 +150,6 @@ def testContainer(c):
         assert(c.first() == c[0])
         assert(c.last() == c[c.size() - 1])
 
-
-
-
-
-    
-    
-
-
-
-
-
-
 testContainer(c)
 
 
