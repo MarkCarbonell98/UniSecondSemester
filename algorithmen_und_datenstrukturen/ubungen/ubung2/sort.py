@@ -13,13 +13,13 @@ def insertionSort(a):
                 break
             j -= 1
         a[j] = current
-    
-    print("insertionSort counter = ", counter)
+    return a, counter
 
 # mergesort
 def merge(left, right):
     res = []
-    i, j,counter = 0,0, 0
+    i, j = 0,0
+    counter = 0
     while i < len(left) and j < len(right):
         counter += 1
         if left[i] <= right[j]:
@@ -32,39 +32,69 @@ def merge(left, right):
     return res, counter
 
 def mergeSort(a, counter = 0):
+    mergeSort.counter = counter
     n = len(a)
     if n <= 1:
-        return a
+        return a, mergeSort.counter
     else:
         left = a[0 : n//2] # floor(n/2)
         right = a[n//2 : n]
-        leftSorted = mergeSort(left)
-        rightSorted = mergeSort(right)
-        result, counter = merge(leftSorted, rightSorted)
-        return result
+        leftSorted, count1 = mergeSort(left, mergeSort.counter)
+        rightSorted, count2 = mergeSort(right, mergeSort.counter)
+        result, passedCounter = merge(leftSorted, rightSorted)
+        # mergeSort.counter += passedCounter + count1 + count2
+        mergeSort.counter += passedCounter
+        return result, mergeSort.counter
 
 # quicksort
 def partition(a, l, r): #left and right pointers. a is the array
     pivot = a[r]
     i = l
     j = r - 1
+    counter = 0
     while True:
+        counter += 1
         while i < r and a[i] <= pivot:
+            counter += 1
             i += 1
         while j > l and a[j] >= pivot:
-            i -= 1
+            j -= 1
+            counter += 1
         if i < j:
             a[i], a[j] = a[j], a[i] #swap
         else:
             break
+        a[r] = a[i]
         a[r] = pivot
-        return i
+    return i, counter
 
-def quickSortImpl(a, l, r):
+def quickSortImpl(a, l, r, counter = 0):
+    quickSortImpl.counter = counter
     if r > l:
-        k = partition(a,l,r)
-        quickSortImpl(a,l, k - 1)
-        quickSortImpl(a, k + 1, r)
+        k, passedCounter = partition(a,l,r)
+        quickSortImpl.counter += passedCounter
+        quickSortImpl(a,l, k - 1, quickSortImpl.counter)
+        quickSortImpl(a, k + 1, r, quickSortImpl.counter)
+        return a, quickSortImpl.counter
 
 def quickSort(a):
-    quickSortImpl(a, 0, len(a) - 1)
+    newArray, count = quickSortImpl(a, 0, len(a) - 1)
+    return newArray, count
+
+
+
+from random import sample
+from copy import deepcopy
+test = sample(range(101), 50)
+test1 = deepcopy(test)
+test2 = deepcopy(test)
+
+test, comparisonCount1 = insertionSort(test)
+
+test1, comparisonCount2 = mergeSort(test1)
+
+test2, comparisonCount3 = quickSort(test2)
+
+print(f"Insertion sort count = {comparisonCount1}, sorted array is",test )
+print(f"MergeSort sort count = {comparisonCount2}, sorted array is",test1 )
+print(f"Quicksort sort count = {comparisonCount3}, sorted array is",test2)
