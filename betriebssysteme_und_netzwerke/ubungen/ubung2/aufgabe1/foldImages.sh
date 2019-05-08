@@ -23,7 +23,7 @@ then
     ls -lt --full-time |  grep -E '*.jpg|*.jpeg|*.png' | while read -r line
     do
         for dir in $dirNames
-        do
+        do 
             lineDate=$( echo $line | grep -Eo '[[:digit:]]{4}-[[:digit:]]{2}')
             if [ $lineDate = $dir ] && [ -d $dir ]
             then

@@ -8,7 +8,7 @@ def friday13th():
         for firstDay in range(7):
             day, count = firstDay, 0
             for month in range(12):
-                if(day + (13 - 1))%7 == 4:
+                if(day + (13 - 1))%7==4:
                     count += 1
                 day += days[month] + (leap if month == 1 else 0)
             # print(f"# Friday 13ths's [jan 1st: {da")
