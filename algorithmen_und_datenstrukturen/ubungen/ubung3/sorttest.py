@@ -43,12 +43,38 @@ def insertionSort(a, key=lambda x: x):
         current = a[i]
         j = i
         while j > 0:
-            if key(a[j-1]) < key(current):
-                break
-            else:
+            # großer stets kleiner, und wechsel des Swaps auf linie 48
+            if key(a[j-1]) > key(current):
                 a[j] = a[j-1]
+            else:
+                break
             j -= 1
         a[j] = current
+
+def merge(left, right, key = lambda x : x):
+    res = []
+    i, j = 0,0
+    while i < len(left) and j < len(right):
+        if key(left[i]) <= key(right[j]):
+            res.append(left[i])
+            i += 1
+        else:
+            res.append(right[j])
+            j += 1
+    res += left[i : len(left)] + right[j : len(right)]
+    return res
+
+def mergeSort(a, key=lambda x : x):
+    n = len(a)
+    if n <= 1:
+        return a
+    else:
+        left = a[0 : n//2] # floor(n/2)
+        right = a[n//2 : n]
+        leftSorted = mergeSort(left, key)
+        rightSorted = mergeSort(right, key)
+        result = merge(leftSorted, rightSorted, key)
+        return result
 
 ##################################################################
 
@@ -100,30 +126,75 @@ class TestSortingFunctions(unittest.TestCase):
     def testBuiltinSort(self):
         # test the integer arrays
         for a in self.int_arrays:
-            ... # your code here (test that array is sorted)
+            copyOfASorted = copy.deepcopy(a)
+            copyOfASorted.sort()
+            self.checkIntegerSorting(a, copyOfASorted)
 
         # test the Student arrays
         for a in self.student_arrays:
-            ... # your code here (test that array is sorted and stable)
+            copyOfASorted = copy.deepcopy(a)
+            copyOfASorted.sort(key=lambda x : x.mark)
+            self.checkStudentSorting(a, copyOfASorted)
 
     def testInsertionSort(self):
         # test the integer arrays
         for a in self.int_arrays:
-            ... # your code here (test that array is sorted)
+            copyOfASorted = copy.deepcopy(a)
+            insertionSort(copyOfASorted)
+            self.checkIntegerSorting(a, copyOfASorted)
 
         # test the Student arrays
         for a in self.student_arrays:
+            copyOfASorted = copy.deepcopy(a)
+            insertionSort(copyOfASorted, lambda x : x.mark)
+            self.checkStudentSorting(a, copyOfASorted)
+
+    def testMergeSort(self):
+        # test the integer arrays
+        for a in self.int_arrays:
+            copyOfA = copy.deepcopy(a)
+            copyOfASorted = mergeSort(copyOfA)
+            self.checkIntegerSorting(a, copyOfASorted)
+
+        # test the Student arrays
+        for a in self.student_arrays:
+            copyOfA = copy.deepcopy(a)
+            copyOfASorted = mergeSort(copyOfA, lambda x : x.mark);
+            self.checkStudentSorting(a, copyOfASorted)
             ... # your code here (test that array is sorted and stable)
 
     def checkIntegerSorting(self, original, result):
         '''Parameter 'original' contains the array before sorting,
         parameter 'result' contains the result of the sorting algorithm.'''
-        ... # your code here
+        self.assertEqual(len(original), len(result), "the length is not equal")
+        for i in range(len(original)):
+            assert original[i] in result
+        for i in range(len(result)):
+            assert result[i] in original
+        resultCopy = copy.deepcopy(result)
+        resultCopy.sort()
+        self.assertEqual(result, resultCopy, "the result is not sorted properly")
 
     def checkStudentSorting(self, original, result):
         '''Parameter 'original' contains the array before sorting,
         parameter 'result' contains the result of the sorting algorithm.'''
-        ... # your code here
+        
+        self.assertEqual(len(original), len(result), "the length is not equal");
+        for i in range(len(original)):
+            assert original[i] in result
+        for i in range(len(result)):
+            assert result[i] in original
+        resultCopy = copy.deepcopy(result)
+        resultCopy.sort(key=lambda x : x.mark)
+        self.assertEqual(result, resultCopy, "the result is not sorted properly")
+
+        #tests für stabile Sortierung
+        for i in range(len(result)):
+            for j in range(i+1,len(result)):
+                if(result[i] == result[j]):
+                    self.assertLess(original.index(result[i]), original.index(result[j]), "The sort was not stable");
+        
+
 
 ##################################################################
 
