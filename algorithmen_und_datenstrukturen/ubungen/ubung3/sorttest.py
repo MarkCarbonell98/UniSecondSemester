@@ -2,6 +2,12 @@ import unittest
 from random import randint
 import copy
 
+#Aufgabe 1a)
+
+# Der Unterschied zwischen test... und check... ist dass test... beschreibt unittests mittels assertions bezogen auf jedes Element eines einzelnen Array                                                                                                                                                                                                                                                    
+
+# check... auf der andere Seite, mach ein Vergleich zwischen die Werte von zwei Arrays, einmal vor der Sortierung und einmal nach der sortierung, und 'checkt' mittels assertions ob die Werte auf einen Array eine sortierte Version von die Werte des anderen Arrays ist.
+
 class Student:
     def __init__(self, name, mark):
         '''Construct new Student object with given 'name' and 'mark'.'''
@@ -53,7 +59,6 @@ def insertionSort(a, key=lambda x: x):
 ##################################################################
 
 class TestSortingFunctions(unittest.TestCase):
-
     def setUp(self):
         '''Create test data.'''
 
