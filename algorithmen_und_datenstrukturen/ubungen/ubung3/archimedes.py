@@ -37,8 +37,8 @@ def archimedes2(k):
     s = 2 ** 0.5
     t = 2
     Ecken2 = 4
-    U_Schranke = 0
-    O_Schranke = 0
+    U_Schranke2 = 0
+    O_Schranke2 = 0
     
     for i in range(k):
         s_ = s/((2 + (4 - s ** 2) ** 0.5 ) ** 0.5)
@@ -52,6 +52,8 @@ def archimedes2(k):
     return U_Schranke2, O_Schranke2
 
 def testArchimedes1(n):
+    U_Schranke = 0
+    O_Schranke = 0
     t_checked = 0
     for i in range(n):
         archimedes1(n)
@@ -60,6 +62,8 @@ def testArchimedes1(n):
             print ("Fehler")
         
 def testArchimedes2(n):
+    U_Schranke2 = 0
+    O_Schranke2 = 0
     t_checked = 0
     for i in range(n):
         archimedes2(n)
@@ -70,7 +74,8 @@ def testArchimedes2(n):
         
 if __name__ == "__main__":   
     import math
-    
+    k = 10
+    n = 10
     archimedes1(k)
     archimedes2(k)
     testArchimedes1(n)
