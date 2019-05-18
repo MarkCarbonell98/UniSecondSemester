@@ -1,0 +1,2 @@
+MOVE LOCK, #0
+RET
