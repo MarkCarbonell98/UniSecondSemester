@@ -1,0 +1,18 @@
+Aufgabe 1a)
+  a <  b  <=>  not (b <= a)
+  a >  b  <=>  not (a <= b)
+  a >= b  <=>       b <= a
+  a == b  <=>  (a <= b) and (b <= a)
+  a != b  <=>  not (a <= b) or not (b <= a)
+
+Aufgabe 1b)
+  Man testet nur aufeinanderfolgende Elemente, denn:
+  
+  Gilt für alle i \in 1...(N-1):  a[i] <= a[i+1]
+  dann gilt auch a[i+1] <= a[i+2] und damit wegen 
+  der Transitivität von "<=" a[i] <= a[i+2]
+
+  Allgemein folgt aus a[i] <= a[i+k] und a[i+k] <= a[i+k+1]
+  wegen der Transitivität auch a[i+k+1] (mit k > 0).
+
+  Damit gilt a[i] <= a[j] für alle j = i+k.
