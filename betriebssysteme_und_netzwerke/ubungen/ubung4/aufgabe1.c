@@ -5,14 +5,14 @@
 pthread_mutex_t mutex;
 pthread_cond_t consumer_c, producer_c;
 
-int buffer = 0;
+int counter = 0;
 
 void * producer(void * ptr) {
     int i;
     for(i = 1; i <= MAX; i++) {
         pthread_mutex_lock(&mutex);
-        while(buffer != 0) pthread_cond_wait(&producer_c, &mutex);
-        buffer = i;
+        while(counter != 0) pthread_cond_wait(&producer_c, &mutex);
+        counter = i;
         pthread_cond_signal(&consumer_c);
         pthread_mutex_unlock(&mutex);
     }
@@ -24,8 +24,8 @@ void * consumer(void * ptr) {
     for ( i = 0; i < MAX; i++)
     {
         pthread_mutex_lock(&mutex);
-        while(buffer == 0) pthread_cond_wait(&consumer_c, &mutex);
-        buffer = 0;
+        while(counter == 0) pthread_cond_wait(&consumer_c, &mutex);
+        counter = 0;
         pthread_cond_signal(&producer_c);
         pthread_mutex_unlock(&mutex);
     }
@@ -40,12 +40,14 @@ int main(int argc, char const *argv[])
     pthread_cond_init(&producer_c, 0);
     pthread_create(&con, 0, consumer, 0);
     pthread_create(&pro, 0, producer, 0);
+    sleep(1000);
+    counter = 0;
+    sleep(3000);
     pthread_join(pro, 0);
     pthread_join(con, 0);
     pthread_cond_destroy(&consumer_c);
     pthread_cond_destroy(&producer_c);
     pthread_mutex_destroy(&mutex);
-
     return 0;
 }
 
