@@ -53,10 +53,6 @@ def archimedes2(k):
         U_Schranke2 = Ecken2/2 * s
         O_Schranke2 = Ecken2/2 * t
         print("Untere Schranke: ", U_Schranke2,", Obere Schranke: ", O_Schranke2, ", Differenz: ", O_Schranke2 - U_Schranke2, ", Anzahl der Ecken: ", Ecken2)
-    
-
-
-
 
 class TestArchimedes(unittest.TestCase):
     def setUp(self):
