@@ -2,10 +2,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-// #define NUM_THREADS 1
-// #define NUM_THREADS 5
-// #define NUM_THREADS 10
-// #define NUM_THREADS 100
+
+// FABIAN REGNERY, JUSTIN SOSTMANN, MARCOS CARBONELL
+// TUTOR ERIK KOYNOV
+
+// aufgabe a)
+/*
+    mit 1 thread 
+    There were 1 threads created, and the mutex was passed 86800789 times
+
+    mit 5 threads
+    There were 5 threads created, and the mutex was passed 25145018 times
+
+    mit 10 threads
+    There were 10 threads created, and the mutex was passed 24597491 times
+
+    mit 100 threads
+    There were 100 threads created, and the mutex was passed 24267995 times
+
+    Der anzahl ist nicht gleich auf alle threads verteilt. Je mehr threads erzeugt werden, desto weniger wird der Mutex zugeteilt.
+
+*/
+
+/* AUFGABE B 
+
+    den tests werden auf den core #3 ausgeführt mit taskset -c 3 ./aufgabe1.exe <num-of-threads>
+
+    mit 1 thread 
+    There were 1 threads created, and the mutex was passed 86967742 times
+
+    mit 5 threads
+    There were 5 threads created, and the mutex was passed 86621738 times
+
+    mit 10 threads
+    There were 10 threads created, and the mutex was passed 86973668 times
+
+    mit 100 threads
+    There were 100 threads created, and the mutex was passed 86985212 times
+
+    In dem Fall wird der Mutex in fast konstanter Weise an die Threads zugeteilt.
+    Da das Program nur von einen Core ausgeführt wird, dann wird der Mutex nicht von andere Cores blockiert um erhöht zu werden, was natürlich Zeit verbraucht, und die Fairness erniedrigt. Jetzt können wir sagen dass die Fairness sich erhöht hat wegen die ausführung auf einen einzigen Core.
+
+*/
 
 pthread_mutex_t mutex;
 pthread_cond_t parent_cond, child_cond;
@@ -46,7 +84,7 @@ int main(int argc, char const *argv[])
         childInnerCounter = 0;
         sleep(3);
 
-        printf("There were %d threads created, and the child thread counter is %d \n", i, childInnerCounter);
+        printf("There were %d threads created, and the mutex was passed %d times\n", i, childInnerCounter);
 
         pthread_mutex_destroy(&mutex);
         exit(EXIT_SUCCESS);
@@ -57,3 +95,5 @@ int main(int argc, char const *argv[])
         return 0;
     }
 }
+
+
