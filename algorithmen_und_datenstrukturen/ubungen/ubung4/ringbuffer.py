@@ -282,6 +282,8 @@ class UniversalContainer3:
     def __init__(self): # constructor for empty container
         self.capacity_ = 1 # we reserve memory for at least one item
         self.data_ = [None]*self.capacity_ # the internal memory
+        self.startIndex_ = 0
+        self.endIndex_ = 0
         self.size_ = 0 # no item has been inserted yet
 
     def size(self):
@@ -291,36 +293,61 @@ class UniversalContainer3:
         return self.capacity_
 
     def push(self, item): # add item at the end
-        if self.capacity_ == self.size_: # internal memory is full
+        if self.size_ < self.capacity_:
+            self.data_[self.size_] = item
+            self.size_ += 1
+        elif self.size_ == self.capacity_ - 1:
+            if self.startIndex_ > 0:
+                self.endIndex_ = 0
+            self.data_[self.endIndex_] = item
+            # self.size += 1
+        elif self.startIndex_ > self.endIndex_:
+            self.endIndex_ += 1
+            self.data_[self.endIndex_] = item
+            self.size_ += 1
+        elif self.startIndex_ == self.endIndex_ and self.startIndex_ != 0:
             self.capacity_ *= 2
-            new_data = [None]*self.capacity_
+            new_data = [None] * self.capacity_
+            self.startIndex_ = 0
+            self.endIndex_ = self.size_
             for i in range(self.size_):
                 new_data[i] = self.data_[i]
             self.data_ = new_data
-        self.data_[self.size_] = item
-        self.size_ += 1
+            self.data_[self.size_] = item
+            self.size_ += 1
+
+        # if self.capacity_ == self.size_: # internal memory is full
+        #     self.capacity_ *= 2
+        #     new_data = [None]*self.capacity_
+        #     for i in range(self.size_):
+        #         new_data[i] = self.data_[i]
+        #     self.data_ = new_data
+        # self.data_[self.size_] = item
+        # self.size_ += 1
 
     def popFirst(self):
         if self.size_ == 0:
             raise RuntimeError("popFirst() on empty container")
         self.size_ -= 1
-        for i in range(self.size_):
-            self.data_[i] = self.data_[i+1]
+        self.startIndex_ += 1
+        # for i in range(self.size_):
+        #     self.data_[i] = self.data_[i+1]
 
     def popLast(self):
         if self.size_ == 0:
             raise RuntimeError("popLast() on empty container")
         self.size_ -= 1
+        self.endIndex_ -= 1
 
     def __getitem__(self, index): # __getitem__ implements v = c[index]
         if index < 0 or index >= self.size_:
             raise RuntimeError("index out of range")
-        return self.data_[index]
+        return self.data_[index + self.startIndex_]
 
     def __setitem__(self, index, v): # __setitem__ implements c[index] = v
         if index < 0 or index >= self.size_:
             raise RuntimeError("index out of range")
-        self.data_[index] = v
+        self.data_[index + self.startIndex_] = v
 
     def first(self):
         return self.__getitem__(0)
