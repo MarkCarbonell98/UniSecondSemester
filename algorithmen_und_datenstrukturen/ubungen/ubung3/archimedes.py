@@ -1,7 +1,5 @@
 import unittest
 
-
-
 def archimedes1(k):
     '''first version'''
     s = 2 ** 0.5
