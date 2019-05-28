@@ -293,28 +293,15 @@ class UniversalContainer3:
         return self.capacity_
 
     def push(self, item): # add item at the end
-        if self.size_ < self.capacity_:
-            self.data_[self.size_] = item
-            self.size_ += 1
-        elif self.size_ == self.capacity_ - 1:
-            if self.startIndex_ > 0:
-                self.endIndex_ = 0
-            self.data_[self.endIndex_] = item
-            # self.size += 1
-        elif self.startIndex_ > self.endIndex_:
-            self.endIndex_ += 1
-            self.data_[self.endIndex_] = item
-            self.size_ += 1
-        elif self.startIndex_ == self.endIndex_ and self.startIndex_ != 0:
+        if self.size_ == self.capacity_:
             self.capacity_ *= 2
-            new_data = [None] * self.capacity_
-            self.startIndex_ = 0
-            self.endIndex_ = self.size_
+            data = [None] * self.capacity_
             for i in range(self.size_):
-                new_data[i] = self.data_[i]
-            self.data_ = new_data
-            self.data_[self.size_] = item
-            self.size_ += 1
+                data[i] = self[i]
+            self.data_ = data
+            self.start = 0
+        self.size_ += 1
+        self.data_[self.size_ - 1] = item
 
         # if self.capacity_ == self.size_: # internal memory is full
         #     self.capacity_ *= 2

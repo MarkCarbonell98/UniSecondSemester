@@ -11,7 +11,8 @@ class Operator:
         self.associativity = associativity
 
 def parse(s):
-    print()
+    
+    
     '''
         while there are tokens in S
             
