@@ -1,50 +1,93 @@
-
 class Number:
     def __init__(self, number):
-        self.number = number
+        self.value_ = number
 
 class Operator:
-    def __init__(self, operator, precedence, associativity):
-        self.operator = operator
-        self.left = self.right = None
-        self.precedence = precedence
-        self.associativity = associativity
+    def __init__(self, left, operator, right):
+        self.operator_ = operator
+        self.left_ = left
+        self.right_ = right
+
+from collections import namedtuple
+from pprint import pprint as pp
+ 
+OpInfo = namedtuple('OpInfo', 'prec assoc')
+L, R = 'Left Right'.split()
+ 
+operations = {
+ '*': OpInfo(prec=3, assoc=L),
+ '/': OpInfo(prec=3, assoc=L),
+ '+': OpInfo(prec=2, assoc=L),
+ '-': OpInfo(prec=2, assoc=L),
+ '(': OpInfo(prec=9, assoc=L),
+ ')': OpInfo(prec=0, assoc=L),
+ }
+ 
+NUM, LPAREN, RPAREN = 'NUMBER ( )'.split()
+ 
+ 
+def prepareInfixString(char = None):
+    'charuts an expression and returns list of (TOKENTYPE, tokenvalue)'
+
+    if char is None:
+        char = input('expression: ')
+    tokens = list(char)
+    s = []
+    for token in tokens:
+        if token in operations:
+            s.append((token, operations[token]))
+        else:    
+            s.append((NUM, token))
+    return s
 
 def parse(s):
-    
-    
-    '''
-        while there are tokens in S
-            
-            if token is a number, then push it to the number stack
+    string = prepareInfixString(s)
+    outq, stack = [], []
+    for token, val in string:
+        note = action = ''
+        if token is NUM:
+            outq.append(val)
+        elif token in operations:
+            t1, (p1, a1) = token, val
+            v = t1
+            while stack:
+                t2, (p2, a2) = stack[-1]
+                if (a1 == L and p1 <= p2) or (a1 == R and p1 < p2):
+                    if t1 != RPAREN:
+                        if t2 != LPAREN:
+                            stack.pop()
+                            outq.append(t2)
+                        else:    
+                            break
+                    else:        
+                        if t2 != LPAREN:
+                            stack.pop()
+                            outq.append(t2)
+                        else:    
+                            stack.pop()
+                            break
+                else:
+                    break
+            if t1 != RPAREN:
+                stack.append((token, val))
+    while stack:
+        t2, (p2, a2) = stack[-1]
+        stack.pop()
+        outq.append(t2)
+    return outq
+ 
 
-            if token is an parenthesis then push it to the operator stack
+def evaluateTree(postfixList):
+    a=[]
+    b={'+': lambda x,y: y+x, '-': lambda x,y: y-x, '*': lambda x,y: y*x,'/': lambda x,y:y/x}
+    for c in postfixList:
+        if c in b: a.append(b[c](a.pop(),a.pop()))
+        else: a.append(float(c))
+    return a
 
-            if token is an operator then
-
-                while(there is a parenthesis at the top of the op. stack || there is op. at the top of op. stack with greater precedence || the op. at the op of op has equal precendence and is left associative && the op at top of op. stack is not a left parenthesis) 
-                    pop operators from op. stack to the number stack
-                push op. to op. stack
-
-            if char is a left parenthesis, then
-                push it to op. stack
-            if char is a right paren, then
-                while the op. at op stack is not a left paren
-                    pop op. from op.stack into the number stack
-                if left paren at top of op. stack
-                    pop op. from op. stack and erase it
-        if no more char to read
-            while op. tokens in op stack stack
-                pop op. from op. stack and push to number stack
-                
-        exit
-                
-
-
-    '''
-
-
-
-
-
+# infix = '2*4*(3+(4-7)*8)-(1-6)'
+infix = '2+5*3'
+rp = parse(infix)
+print(rp)
+print(evaluateTree(rp))
 

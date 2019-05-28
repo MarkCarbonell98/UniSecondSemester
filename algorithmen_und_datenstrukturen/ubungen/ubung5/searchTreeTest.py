@@ -1,7 +1,7 @@
 import unittest
-
 import random
 import string
+
 from searchTree import Node, SearchTree
 
 class TestSearchTree(unittest.TestCase):
@@ -15,6 +15,9 @@ class TestSearchTree(unittest.TestCase):
     def isTreeValid(self, tree):
         # todo
         print(self.tree.BFTraversal())
+        tree = SearchTree()
+        assert tree.left == None and tree.right == None
+        
 
     def testStartingValues(self):   
         
