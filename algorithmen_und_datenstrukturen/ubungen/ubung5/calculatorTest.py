@@ -106,24 +106,24 @@ print(evaluateTree(rp))
 #       calc = TODO
 #       infix = '{}+{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber+secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber+secondNumber 
 
 #   def test_substraction(self):
 #       calc = TODO
 #       infix = '{}-{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber-secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber-secondNumber 
 
 #   def test_multiplication(self):
 #       calc = TODO
 #       infix = '{}*{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber*secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber*secondNumber 
 
 #   def test_division(self):
 #       calc = TODO
 #       infix = '{}/{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber/secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber/secondNumber 
 
 #   def test_operator_order(self):
