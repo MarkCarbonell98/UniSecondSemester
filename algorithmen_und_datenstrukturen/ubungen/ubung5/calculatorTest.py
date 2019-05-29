@@ -89,3 +89,41 @@ rp = createRPN(infix)
 print(rp)
 print(evaluateTree(rp))
 
+
+
+
+
+#TestCases
+#import unittest
+#import random
+
+#   def setUp(self):
+
+#       firstNumber = random.randin(1,20)
+#       secondNumber = random.randin(1,20)
+
+#   def test_addition(self):
+#       calc = TODO
+#       infix = '{}+{}'.format(firstNumber,secondNumber)
+#       
+#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber+secondNumber 
+
+#   def test_substraction(self):
+#       calc = TODO
+#       infix = '{}-{}'.format(firstNumber,secondNumber)
+#       
+#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber-secondNumber 
+
+#   def test_multiplication(self):
+#       calc = TODO
+#       infix = '{}*{}'.format(firstNumber,secondNumber)
+#       
+#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber*secondNumber 
+
+#   def test_division(self):
+#       calc = TODO
+#       infix = '{}/{}'.format(firstNumber,secondNumber)
+#       
+#       assert calc.evaluateTree(calc.evaluateTree(.postfix(infix))) == firstNumber/secondNumber 
+
+#   def test_operator_order(self):
