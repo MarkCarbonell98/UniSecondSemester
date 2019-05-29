@@ -40,18 +40,16 @@ def prepareInfixString(char = None):
             s.append((NUM, token))
     return s
 
-def parse(s):
+def createRPN(s):
     string = prepareInfixString(s)
     outq, stack = [], []
     for token, val in string:
-        note = action = ''
         if token is NUM:
             outq.append(val)
         elif token in operations:
-            t1, (p1, a1) = token, val #token, precedence, associativity
-            v = t1
+            t1, (p1, a1) = token, val
             while stack:
-                t2, (p2, a2) = stack[-1]
+                t2, (p2) = stack[-1]
                 if (a1 == L and p1 <= p2) or (a1 == R and p1 < p2):
                     if t1 != RPAREN:
                         if t2 != LPAREN:
@@ -87,7 +85,7 @@ def evaluateTree(postfixList):
 
 # infix = '2*4*(3+(4-7)*8)-(1-6)'
 infix = '2+5*3'
-rp = parse(infix)
+rp = createRPN(infix)
 print(rp)
 print(evaluateTree(rp))
 
