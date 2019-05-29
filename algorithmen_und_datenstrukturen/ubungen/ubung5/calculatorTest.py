@@ -106,24 +106,60 @@ print(evaluateTree(rp))
 #       calc = TODO
 #       infix = '{}+{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber+secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(calc.postfix(infix))) == firstNumber+secondNumber 
 
 #   def test_substraction(self):
 #       calc = TODO
 #       infix = '{}-{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber-secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(calc.postfix(infix))) == firstNumber-secondNumber 
 
 #   def test_multiplication(self):
 #       calc = TODO
 #       infix = '{}*{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber*secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(calc.postfix(infix))) == firstNumber*secondNumber 
 
 #   def test_division(self):
 #       calc = TODO
 #       infix = '{}/{}'.format(firstNumber,secondNumber)
 #       
-#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == firstNumber/secondNumber 
+#       assert calc.evaluateTree(calc.evaluateTree(calc.postfix(infix))) == firstNumber/secondNumber 
 
 #   def test_operator_order(self):
+#       calc = TODO
+#       infixAdd = '{}++{}'.format(firstNumber,secondNumber)
+#       infixSub = '{}--{}'.format(firstNumber,secondNumber)
+#       infixMul = '{}**{}'.format(firstNumber,secondNumber)
+#       infixDiv = '{}//{}'.format(firstNumber,secondNumber)
+#       infixBracketsOpen1 =  infixDiv = '({}+{}'.format(firstNumber,secondNumber)
+#       infixBracketsOpen2 =  infixDiv = '(({}+{}'.format(firstNumber,secondNumber)
+#       infixBracketsClosed1 =  infixDiv = '{})+{}'.format(firstNumber,secondNumber)
+#       infixBracketsClosed2 =  infixDiv = '{}))+{}'.format(firstNumber,secondNumber)
+
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixAdd))) == False
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixSub))) == False
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixMul))) == False
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixDiv))) == False
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixBracketsOpen1))) == False
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixBracketsOpen2))) == False
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixBracketsClosed1))) == False
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infixBracketsClosed2))) == False
+
+#   def test_char(self):
+#       calc = TODO
+#       infix = '{}*a'.format(firstNumber)
+
+#       assert calc.evaluateTree(calc.evaluateTree(tree.postfix(infix))) == False
+
+#   def test_precedence(self):
+#       calc = TODO
+#       infix = '{}+{}*{}'.format(firstNumber,secondNumber,firstNumber)
+
+#       assert calc.evaluateTree(calc.evaluateTree(calc.postfix(infix))) == firstNumber+secondNumber*firstNumber
+
+#   def test_bracketing(self):
+#       calc = TODO
+#       infix = '({}+{})*{}'.format(firstNumber,secondNumber,firstNumber)
+
+#       assert calc.evaluateTree(calc.evaluateTree(calc.postfix(infix))) == (firstNumber+secondNumber)*firstNumber
