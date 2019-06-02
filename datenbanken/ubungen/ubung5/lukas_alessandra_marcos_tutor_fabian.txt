@@ -1,0 +1,104 @@
+AUFGABE 5.1
+
+1. select count(a.name) from artist a where a.begin_year between 1950 and 1970 and a.origin = (select c.id from country c where c.name = 'Germany');
+
+
+ count 
+-------
+  1028
+(1 row)
+
+
+
+
+
+2. select distinct c.city from concert c where c.artist = (select a.id from artist a where a.name = 'Rammstein') and c.name = 'Winter 2001 Tour';
+   city    
+-----------
+ Auckland
+ Southport
+ Sydney
+ Melbourne
+ Wayville
+ Perth
+ Osaka
+ Tokyo
+(9 rows)
+
+
+3. select a.name, sum(ar.end_year - ar.begin_year) as jahre_zusammen from artist a, artist_relation ar where ar.artist1 = (select id from artist where name = 'Morgan, Lorrie') and ar.artist0 = a.id and ar.type = 'married' group by a.name;
+      name      | jahre_zusammen 
+----------------+----------------
+ Kershaw, Sammy |              6
+ Randall, Jon   |              3
+ Whitley, Keith |              3
+(3 rows)
+
+
+4. select name, min(year) as year from release where format = 'Cassette' group by name order by year asc limit 1;
+
+                 name                  | year 
+---------------------------------------+------
+ Sgt. Pepper’s Lonely Hearts Club Band | 1967
+(1 row)
+
+5.select a.name, a.begin_year from artist a, artist_relation ar where ar.artist0 = (select id from artist where name = 'Smith, Will') and ar.type = 'parent' and a.id = ar.artist1;
+     name      | begin_year 
+---------------+------------
+ Smith, Willow |       2000
+ Smith, Jaden  |       1998
+(2 rows)
+
+
+
+Aufgabe 2.
+
+1. select distinct count(t.name) from track t, release r where r.year = 2011 and r.format = 'CD' and lower(t.name) like '%what is%';
+  count  
+---------
+ 3903927
+(1 row)
+
+
+2. select a1.name, length(a1.name) as name_length from artist a1 where length(a1.name) = (select max(length(name)) from artist);
+                                       name                                       | name_length 
+----------------------------------------------------------------------------------+-------------
+ All Shall Be Well (And All Shall Be Well and All Manner of Things Shall Be Well) |          80
+(1 row)
+
+
+3. select distinct case when substring(name from '\s(\w+)$') is not null then substring(name from '\s(\w+)$') end as cut_name from artist where type = 'Person' and begin_year = 1998;
+ cut_name  
+-----------
+ Anne
+ Chanchiki
+ Hollie
+ Jaden
+ Kanon
+ Karin
+ Keke
+ Meimi
+ Riho
+ Rina
+ Ronan
+ 
+(12 rows)
+
+
+Aufgabe 3
+
+1. select name from artist a1 where a1.type = 'Person' and begin_year = 1990 and exists (select name from artist a2 where a2.type = 'Group' and a1.name = a2.name);
+  name   
+---------
+ Alice
+ Redd
+ Sofie
+ Delilah
+ Luce
+ Ray
+ Coco
+ Stratus
+ Juli
+(9 rows)
+
+
