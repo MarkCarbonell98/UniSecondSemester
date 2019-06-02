@@ -22,30 +22,33 @@ class NodeRandom:
     def __init__(self, key, value):
         self.key = key
         self.value = value
-        self.priority = random.randin(1,500)   #piority Attribut hinzugefuegt und random befüllt
+        self.priority = 0  #piority-Attribut hinzugefuegt und auf 0 gesetzt befüllt
+        
+        #Sicherstellen, dass keine Nummern bei der Prioritaet doppelt vergeben werden und Werte loeschen
+       
+        #Zufallszahl
+        randomKey = random.randin(1,10000)
+       
+        #Ist sie bereits in RandomNumbersTaken? Wenn Ja, neue Zufallszahl
+        while randomKey in RandomNumbersTaken:
+           randomKey = random.randin(1,10000)
+           continue
+        
+        #Noch nicht verwendete Zufallszahl in RandomNumbersTaken einfuegen
+        RandomNumbersTaken.append(randomKey)
+        
+        #Prioritaet auf Zufallsnummer setzen
+        self.priority = randomKey    
+        
         self.left = self.right = None
 
 class NodeDynamic:
     def __init__(self, key, value):
         self.key = key
         self.value = value
-        self.priority = 0 #piority Attribut hinzugefuegt und auf 0 gesetzt
+        self.priority = 1 #piority-Attribut hinzugefuegt und auf 1 gesetzt
+        self.left = self.right = None
     
-    #Sicherstellen, dass keine Nummern bei der Prioritaet doppelt vergeben werden und Werte loeschen
-       
-       #Zufallsnummer
-        randomKey = random.randin(1,10000)
-       
-       #Ist sie bereits in RandomNumbersTaken? Wenn Ja, neue Zufallsnummer
-        while randomKey is in RandomNumbersTaken:
-           randomKey = random.randin(1,10000)
-           continue
-        
-        #Noch nicht verwendete Zufallsnummer in RandomNumbersTaken einfuegen
-        RandomNumbersTaken.append(randomKey)
-        
-        #Prioritaet auf Zufallsnummer setzen
-        self.priority = randomKey    
          
         
 
@@ -58,6 +61,9 @@ class RandomTreap:
     def __len__(self):
         return self.size
 
+     #Array zum Speichern der bereits gewählten Zufallszahlen
+    RandomNumbersTaken = [0]
+    
     def insert(self,key, value):
         newNode = NodeRandom(key, value)
         if not self.root:
@@ -164,8 +170,6 @@ class DynamicTreap:
     def __len__(self):
         return self.size
 
-    RandomNumbersTaken = [0]
-    
     
     def insert(self,key, value):
         newNode = NodeDynamic(key, value)
