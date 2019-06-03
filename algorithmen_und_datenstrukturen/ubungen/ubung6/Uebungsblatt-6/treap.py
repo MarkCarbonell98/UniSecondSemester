@@ -198,7 +198,7 @@ class DynamicTreap:
                 i = i.right
 
  
-        #zweiter Suchdurchlauf, um den Parent zu finden, bin mir nicht sicher, ob das so notwendig ist
+ #zweiter Suchdurchlauf, um den Parent zu finden, um ggf. zu tauschen; bin mir nicht sicher, ob das so notwendig ist
         j = self.root
         while priority != j.left.priority and priority != j.right.priority:
             
