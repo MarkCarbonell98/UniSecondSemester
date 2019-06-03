@@ -22,7 +22,7 @@ class NodeRandom:
     def __init__(self, key, value):
         self.key = key
         self.value = value
-        self.priority = 0  #piority-Attribut hinzugefuegt und auf 0 gesetzt befüllt
+        self.priority = 0  #piority-Attribut hinzugefuegt und auf 0 gesetzt
         
         #Sicherstellen, dass keine Nummern bei der Prioritaet doppelt vergeben werden und Werte loeschen
        
@@ -42,6 +42,8 @@ class NodeRandom:
         
         self.left = self.right = None
 
+
+#Node aus Uebung 5 uebernommen und priority hinzugefuegt
 class NodeDynamic:
     def __init__(self, key, value):
         self.key = key
@@ -62,7 +64,7 @@ class RandomTreap:
         return self.size
 
      #Array zum Speichern der bereits gewählten Zufallszahlen
-    RandomNumbersTaken = [0]
+    RandomNumbersTaken = []
     
     def insert(self,key, value):
         newNode = NodeRandom(key, value)
@@ -152,10 +154,10 @@ class RandomTreap:
             if not i: return None
             if key < i.key:
                 i = i.left
-                continue
+                
             elif key > i.key:
                 i = i.right
-                continue
+                
             else:
                 return i
 
@@ -209,12 +211,12 @@ class DynamicTreap:
                 j = j.right
             
         
-        if priority == j.left.priority:
-            rotateRight(self)
+            while priority == j.left.priority:
+                rotateRight(self)
             
         
-        if priority == j.right.priority:
-            rotateLeft(self)
+            while priority == j.right.priority:
+                rotateLeft(self)
 
     def minRightKeyNode(self, node):
         node = node.left
@@ -293,3 +295,25 @@ class DynamicTreap:
 
 
 
+#c)
+filename = die-drei-musketiere.txt
+s = open(filename, encoding="latin-1").read()
+for k in ',;.:-"\'!?':
+    s = s.replace(k, '')
+
+s = s.lower()
+
+text = s.split()
+
+rt = RandomTreap()
+dt = DynamicTreap()
+
+for word in text:
+    rt.insert(word)
+    dt.insert(word)
+    
+    
+
+
+
+def compareTees(tree1, tree2)
