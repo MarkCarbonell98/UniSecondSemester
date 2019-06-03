@@ -1,17 +1,17 @@
 import random
 #Funktionen rotateLeft und rotateRight hinzugefuegt
 
-def rotateLeft(node):
-    newRoot = node.right
-    node.right = newRoot.left
+def rotateLeft(rootnode):
+    newRoot = rootnode.right
+    rootnode.right = newRoot.left
     newRoot.left = node
     return newRoot
 
 
 
-def rotateRight(node):
-    newRoot = node.left
-    node.left = newRoot.right
+def rotateRight(rootnode):
+    newRoot = rootnode.left
+    rootnode.left = newRoot.right
     newRoot.right = node
     return newRoot
 
@@ -88,6 +88,7 @@ class RandomTreap:
                     self.size += 1
                     return self
                 i = i.right
+       
 
     def minRightKeyNode(self, node):
         node = node.left
@@ -195,6 +196,25 @@ class DynamicTreap:
                     self.size += 1
                     return self
                 i = i.right
+
+ 
+        #zweiter Suchdurchlauf, um den Parent zu finden, bin mir nicht sicher, ob das so notwendig ist
+        j = self.root
+        while priority != j.left.priority and priority != j.right.priority:
+            
+            if key < j.key:
+                j = j.left
+            
+            if key > j.key:
+                j = j.right
+            
+        
+        if priority == j.left.priority:
+            rotateRight(self)
+            
+        
+        if priority == j.right.priority:
+            rotateLeft(self)
 
     def minRightKeyNode(self, node):
         node = node.left
