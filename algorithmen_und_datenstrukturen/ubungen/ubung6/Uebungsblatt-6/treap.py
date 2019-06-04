@@ -32,7 +32,7 @@ class NodeRandom:
         #Ist sie bereits in RandomNumbersTaken? Wenn Ja, neue Zufallszahl
         while randomKey in RandomNumbersTaken:
            randomKey = random.randin(1,10000)
-           continue
+           
         
         #Noch nicht verwendete Zufallszahl in RandomNumbersTaken einfuegen
         RandomNumbersTaken.append(randomKey)
