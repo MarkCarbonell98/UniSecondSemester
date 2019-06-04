@@ -1,4 +1,5 @@
 import random
+import numpy
 #Funktionen rotateLeft und rotateRight hinzugefuegt
 
 def rotateLeft(rootnode):
@@ -313,7 +314,31 @@ for word in text:
     dt.insert(word)
     
     
+def treesort(node,array):
+        if node is None:
+            return
+        treeSort(node.left, array)
+        array.append(node.key)
+        treeSort(node.right, array)
+    
 
 
-
-def compareTees(tree1, tree2)
+def compareTrees(tree1, tree2):
+    ArrayTree1 = []
+    ArrayTree2 = []
+    
+    treesort(tree1.root, ArrayTree1)
+    treesort(tree2.root, ArrayTree2)
+    
+    
+    if numpy.array_equal(ArrayTree1,ArrayTree2):
+        return True
+    
+    
+    
+    
+    
+    
+    
+    
+    
