@@ -1,5 +1,5 @@
 import random
-import numpy
+
 #Funktionen rotateLeft und rotateRight hinzugefuegt
 
 def rotateLeft(rootnode):
@@ -297,7 +297,7 @@ class DynamicTreap:
 
 
 #c)
-filename = die-drei-musketiere.txt
+filename = "die-drei-musketiere.txt"
 s = open(filename, encoding="latin-1").read()
 for k in ',;.:-"\'!?':
     s = s.replace(k, '')
@@ -338,7 +338,13 @@ def compareTrees(tree1, tree2):
     
     
     
+#d)    
     
-    
-    
+
+
+#e)
+
+#Für die spätere Implementation:
+def top(min_priority):
+    res = []
     
