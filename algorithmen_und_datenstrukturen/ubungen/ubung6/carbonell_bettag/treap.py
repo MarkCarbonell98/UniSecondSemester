@@ -1,6 +1,8 @@
 
 import unittest, random
 
+# Aufgabe a
+
 def rotateLeft(node):
     newRoot = node.right
     node.right = newRoot.left
@@ -12,6 +14,8 @@ def rotateRight(node):
     node.left = newRoot.right
     newRoot.right = node
     return newRoot
+
+#aufgabe b
 
 class NodeRandom:
     def __init__(self, key):

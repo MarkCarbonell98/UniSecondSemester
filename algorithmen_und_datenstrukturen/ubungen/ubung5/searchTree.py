@@ -46,19 +46,6 @@ class SearchTree:
         return node
 
 
-    def BFTraversal(self):
-        if not self.root:
-            return None
-        i = self.root
-        queue, visited = [i], []
-        while(len(queue)):
-            i = queue.pop(0)
-            visited.append((i.key, i.value))
-            if i.left:
-                queue.append(i.left)
-            if i.right:
-                queue.append(i.right)
-        return visited
 
     def depth(self, node = None, count = 0):
         if node == None and count == 0:
