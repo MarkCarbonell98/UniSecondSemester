@@ -13,16 +13,10 @@ def rotateRight(node):
     newRoot.right = node
     return newRoot
 
-class NodeRandom:
+class Node:
     def __init__(self, key):
         self.key = key
         self.priority = random.randint(-100,100)
-        self.left = self.right = None
-
-class NodeDynamic:
-    def __init__(self,key,priority):
-        self.key = key
-        self.priority = priority
         self.left = self.right = None
 
 class RandomTreap:
@@ -30,66 +24,63 @@ class RandomTreap:
         self.root = None
         self.size = 0
 
-    def getParentNode(self, child, parent = None, count = 0):
+    def getParentNode(self, child):
         if not self.root:
             return None
-        if parent == None and count == 0:
-            parent = self.root
-        if child.key == self.root.key:
-            return child
-        if parent.left:
-            if parent.left.key == child.key:
-                return ("L", parent)
-        elif parent.right:
-            if parent.right.key == child.key:
-                return ("R", parent)
-        else:
-            self.getParentNode(child, parent.left, count + 1)
-            self.getParentNode(child, parent.right, count + 1)
+        
+        i = self.root
+        while True:
+            if child.key < i.key:
+                if i.left and i.left.key == i.key:
+                    return i
+                i = i.left
+            elif child.key > i.key:
+                if i.right and i.right.key == i.key:
+                    return i
+                i = i.right
+            else:
+                return i
 
 
-    def __find(self, node, key):
-        if node is None:
-            return None
-        elif key < node.key:
-            return self.__find(node.left, key)
-        elif key > node.key:
-            return self.__find(node.right, key)
-        elif key == node.key:
-            return node
-        else:
-            raise RuntimeError(f'Keys {key} and {node.key} do not compare')
+        
 
-    def find(self, key):
-        return self.__find(self.root, key)
+    def reheapRandomTreap(self, node):
+        if node.left and node.right:
+            if node.priority < node.left.priority:
+                newRoot = rotateRight(node)
+                node = newRoot
+            elif node.priority < node.right.priority:
+                newRoot = rotateLeft(node)
+                node = newRoot
+        
+        parent = self.getParentNode(node)
+        if parent.priority < node.priority and self.root and parent.key != self.root.key:
+            self.reheapRandomTreap(parent)
 
     def insert(self,key):
-        newNode = NodeRandom(key)
+        newNode = Node(key)
         if not self.root:
             self.root = newNode
             self.size += 1
             return self
         
-        fatherNode = None
-        
         i = self.root
         while True:
             if key == i.key: 
-                break
+                return
             if key < i.key:
                 if i.left == None:
                     i.left = newNode
                     self.size += 1
-                    # self.reheapTree(i)
-                    break;
-                    return (i, i.left)
+                    self.reheapRandomTreap(i)
+                    return self
                 i = i.left
             else:
                 if i.right == None:
                     i.right = newNode
                     self.size += 1
-                    # self.reheapTree(i)
-                    return (i, i.right)
+                    self.reheapRandomTreap(i)
+                    return self
                 i = i.right
 
     def depth(self, node = None, count = 0):
@@ -100,14 +91,44 @@ class RandomTreap:
         right = self.depth(node.right, count + 1)
         return max(left, right) + 1
 
-
 class DynamicTreap:
     def __init__(self):
         self.root = None
         self.size = 0
+
+    def getParentNode(self, child):
+        if not self.root:
+            return None
+        
+        i = self.root
+        while True:
+            if child.key < i.key:
+                if i.left and i.left.key == i.key:
+                    return i
+                i = i.left
+            elif child.key > i.key:
+                if i.right and i.right.key == i.key:
+                    return i
+                i = i.right
+            else:
+                return i
+
+    def reheapDynamicTreap(self, node):
+        if node.left and node.right:
+            if node.priority < node.left.priority:
+                newRoot = rotateRight(node)
+                node = newRoot
+
+            elif node.priority < node.right.priority:
+                newRoot = rotateLeft(node)
+                node = newRoot
+
+        parent = self.getParentNode(node)
+        if parent.priority < node.priority and self.root and parent.key != self.root.key:
+            self.reheapDynamicTreap(parent)
     
-    def insert(self,key, priority):
-        newNode = NodeDynamic(key, priority)
+    def insert(self,key):
+        newNode = Node(key)
         if not self.root:
             self.root = newNode
             self.size += 1
@@ -116,18 +137,20 @@ class DynamicTreap:
         i = self.root
         while True:
             if key == i.key:
-                return
+                i.priority += 1
+                self.reheapDynamicTreap(i)
+                return self
             elif key > i.key:
                 if i.right == None:
                     i.right = newNode
                     self.size += 1
-                    self.reheap(i)
+                    self.reheapDynamicTreap(i)
                     return self
                 i = i.right
             elif key < i.key:
                 if i.left == None:
                     i.left = newNode
-                    self.reheap(i)
+                    self.reheapDynamicTreap(i)
                     self.size += 1
                     return self
                 i = i.left
@@ -137,8 +160,10 @@ randomTreap.insert(1)
 randomTreap.insert(2)
 randomTreap.insert(3)
 randomTreap.insert(4)
-print(randomTreap.inorderTraversal())
 
 dynamicTreap = DynamicTreap()
-dynamicTreap
+dynamicTreap.insert(1)
+dynamicTreap.insert(2)
+dynamicTreap.insert(3)
+dynamicTreap.insert(4)
 
