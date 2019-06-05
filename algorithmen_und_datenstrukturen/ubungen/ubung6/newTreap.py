@@ -154,6 +154,8 @@ class DynamicTreap:
                     self.size += 1
                     return self
                 i = i.left
+    def top(min_priority):
+        pass
 
 randomTreap = RandomTreap()
 randomTreap.insert(1)
