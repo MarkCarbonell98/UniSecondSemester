@@ -4,7 +4,7 @@ import random
 def rotateLeft(rootnode):
     newRoot = rootnode.right
     rootnode.right = newRoot.left
-    newRoot.left = node
+    newRoot.left = rootnode
     return newRoot
 
 
@@ -12,7 +12,7 @@ def rotateLeft(rootnode):
 def rotateRight(rootnode):
     newRoot = rootnode.left
     rootnode.left = newRoot.right
-    newRoot.right = node
+    newRoot.right = rootnode
     return newRoot
 
 
@@ -21,18 +21,17 @@ def rotateRight(rootnode):
 class NodeRandom:
     def __init__(self, key, value):
         self.key = key
-        self.value = value
         self.priority = 0  #piority-Attribut hinzugefuegt und auf 0 gesetzt
         
         #Sicherstellen, dass keine Nummern bei der Prioritaet doppelt vergeben werden und Werte loeschen
-       
+        
         #Zufallszahl
         randomKey = random.randin(1,10000)
-       
+        
         #Ist sie bereits in RandomNumbersTaken? Wenn Ja, neue Zufallszahl
         while randomKey in RandomNumbersTaken:
-           randomKey = random.randin(1,10000)
-           
+            randomKey = random.randin(1,10000)
+            
         
         #Noch nicht verwendete Zufallszahl in RandomNumbersTaken einfuegen
         RandomNumbersTaken.append(randomKey)
@@ -50,8 +49,8 @@ class NodeDynamic:
         self.value = value
         self.priority = 1 #piority-Attribut hinzugefuegt und auf 1 gesetzt
         self.left = self.right = None
-    
-         
+
+        
         
 
 
@@ -316,4 +315,11 @@ for word in text:
 
 
 
-def compareTees(tree1, tree2)
+def compareTrees(tree1, tree2):
+    if tree1 == None and tree2 is None:
+        return True
+    elif tree1 != None and tree2 != None:
+        return tree1.priority == tree2.priority and compareTrees(tree1.left, tree2.left) and compareTrees(tree1.right, tree2.right)
+    else:
+        return False
+
