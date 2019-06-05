@@ -1,17 +1,18 @@
 import random
+
 #Funktionen rotateLeft und rotateRight hinzugefuegt
 
-def rotateLeft(node):
-    newRoot = node.right
-    node.right = newRoot.left
+def rotateLeft(rootnode):
+    newRoot = rootnode.right
+    rootnode.right = newRoot.left
     newRoot.left = node
     return newRoot
 
 
 
-def rotateRight(node):
-    newRoot = node.left
-    node.left = newRoot.right
+def rotateRight(rootnode):
+    newRoot = rootnode.left
+    rootnode.left = newRoot.right
     newRoot.right = node
     return newRoot
 
@@ -22,7 +23,7 @@ class NodeRandom:
     def __init__(self, key, value):
         self.key = key
         self.value = value
-        self.priority = 0  #piority-Attribut hinzugefuegt und auf 0 gesetzt befüllt
+        self.priority = 0  #piority-Attribut hinzugefuegt und auf 0 gesetzt
         
         #Sicherstellen, dass keine Nummern bei der Prioritaet doppelt vergeben werden und Werte loeschen
        
@@ -32,7 +33,7 @@ class NodeRandom:
         #Ist sie bereits in RandomNumbersTaken? Wenn Ja, neue Zufallszahl
         while randomKey in RandomNumbersTaken:
            randomKey = random.randin(1,10000)
-           continue
+           
         
         #Noch nicht verwendete Zufallszahl in RandomNumbersTaken einfuegen
         RandomNumbersTaken.append(randomKey)
@@ -42,6 +43,8 @@ class NodeRandom:
         
         self.left = self.right = None
 
+
+#Node aus Uebung 5 uebernommen und priority hinzugefuegt
 class NodeDynamic:
     def __init__(self, key, value):
         self.key = key
@@ -62,7 +65,7 @@ class RandomTreap:
         return self.size
 
      #Array zum Speichern der bereits gewählten Zufallszahlen
-    RandomNumbersTaken = [0]
+    RandomNumbersTaken = []
     
     def insert(self,key, value):
         newNode = NodeRandom(key, value)
@@ -88,6 +91,7 @@ class RandomTreap:
                     self.size += 1
                     return self
                 i = i.right
+       
 
     def minRightKeyNode(self, node):
         node = node.left
@@ -151,10 +155,10 @@ class RandomTreap:
             if not i: return None
             if key < i.key:
                 i = i.left
-                continue
+                
             elif key > i.key:
                 i = i.right
-                continue
+                
             else:
                 return i
 
@@ -195,6 +199,25 @@ class DynamicTreap:
                     self.size += 1
                     return self
                 i = i.right
+
+ 
+ #zweiter Suchdurchlauf, um den Parent zu finden, um ggf. zu tauschen; bin mir nicht sicher, ob das so notwendig ist
+        j = self.root
+        while priority != j.left.priority and priority != j.right.priority:
+            
+            if key < j.key:
+                j = j.left
+            
+            if key > j.key:
+                j = j.right
+            
+        
+            while priority == j.left.priority:
+                rotateRight(self)
+            
+        
+            while priority == j.right.priority:
+                rotateLeft(self)
 
     def minRightKeyNode(self, node):
         node = node.left
