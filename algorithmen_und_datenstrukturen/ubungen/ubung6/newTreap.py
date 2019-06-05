@@ -1,40 +1,29 @@
 
+import unittest, random
 
-import random
-#Funktionen rotateLeft und rotateRight hinzugefuegt
-
-def rotateLeft(rootnode):
-    newRoot = rootnode.right
-    rootnode.right = newRoot.left
-    newRoot.left = rootnode
+def rotateLeft(node):
+    newRoot = node.right
+    node.right = newRoot.left
+    newRoot.left = node
     return newRoot
 
-
-
-def rotateRight(rootnode):
-    newRoot = rootnode.left
-    rootnode.left = newRoot.right
-    newRoot.right = rootnode
+def rotateRight(node):
+    newRoot = node.left
+    node.left = newRoot.right
+    newRoot.right = node
     return newRoot
 
-
-#Node aus Uebung 5 uebernommen und priority hinzugefuegt
 class NodeRandom:
     def __init__(self, key):
         self.key = key
-        self.priority = random.randint(-100, 100)
+        self.priority = random.randint(-100,100)
         self.left = self.right = None
-
-    def __repr__(self):
-        return "NodeRandom(" + str(self.key)  + ", " + str(self.priority) + ")"
-
 
 class NodeDynamic:
-    def __init__(self, key, priority):
+    def __init__(self,key,priority):
         self.key = key
-        self.priority = priority #piority-Attribut hinzugefuegt und auf 1 gesetzt
+        self.priority = priority
         self.left = self.right = None
-
 
 class RandomTreap:
     def __init__(self):
@@ -126,83 +115,30 @@ class DynamicTreap:
         
         i = self.root
         while True:
-            if key == i.key: 
-                i.priority += 1
-                return self
-            if key < i.key:
-                if i.left == None:
-                    i.left = newNode
-                    self.size += 1
-                    return self
-                i = i.left
-            else:
+            if key == i.key:
+                return
+            elif key > i.key:
                 if i.right == None:
                     i.right = newNode
                     self.size += 1
+                    self.reheap(i)
                     return self
                 i = i.right
-
-
-    def depth(self, node = None, count = 0):
-        if node == None and count == 0:
-            node = self.root
-        if node == None: return 0
-        left = self.depth(node.left, count + 1)
-        right = self.depth(node.right, count + 1)
-        return max(left, right) + 1
-
-
-
-
-
-#c)
-# filename = "die-drei-musketiere.txt"
-# s = open(filename, encoding="latin-1").read()
-# for k in ',;.:-"\'!?':
-#     s = s.replace(k, '')
-
-# s = s.lower()
-# text = s.split()
-
-# rt = RandomTreap()
-# dt = DynamicTreap()
-
-# for word in text:
-#     rt.insert(word)
-#     dt.insert(word)
-    
-    
-
-
-
-def compareTrees(tree1, tree2):
-    if tree1 == None and tree2 is None:
-        return True
-    elif tree1 != None and tree2 != None:
-        return tree1.priority == tree2.priority and compareTrees(tree1.left, tree2.left) and compareTrees(tree1.right, tree2.right)
-    else:
-        return False
+            elif key < i.key:
+                if i.left == None:
+                    i.left = newNode
+                    self.reheap(i)
+                    self.size += 1
+                    return self
+                i = i.left
 
 randomTreap = RandomTreap()
 randomTreap.insert(1)
-randomTreap.insert(-1)
 randomTreap.insert(2)
-randomTreap.insert(5)
-randomTreap.insert(-20)
-randomTreap.insert(-40)
-print(randomTreap.find(1))
-print(randomTreap.find(-1))
-print(randomTreap.find(-40))
-print(randomTreap.getParentNode(randomTreap.find(1)))
-print(randomTreap.getParentNode(randomTreap.find(-1)))
-print(randomTreap.getParentNode(randomTreap.find(-40)))
+randomTreap.insert(3)
+randomTreap.insert(4)
+print(randomTreap.inorderTraversal())
 
 dynamicTreap = DynamicTreap()
-dynamicTreap.insert(1, 4)
-dynamicTreap.insert(2, 10)
-dynamicTreap.insert(-1, -10)
-dynamicTreap.insert(10, -10)
-
-
-
+dynamicTreap
 

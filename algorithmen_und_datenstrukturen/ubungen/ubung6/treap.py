@@ -1,4 +1,5 @@
 import random
+
 #Funktionen rotateLeft und rotateRight hinzugefuegt
 
 def rotateLeft(rootnode):
@@ -285,6 +286,7 @@ class DynamicTreap:
                 continue
             else:
                 return i
+<<<<<<< HEAD:algorithmen_und_datenstrukturen/ubungen/ubung6/treap.py
 
 
 
@@ -323,3 +325,5 @@ def compareTrees(tree1, tree2):
     else:
         return False
 
+=======
+>>>>>>> fbf87d5f44810d113a046f9d24b22f0fb1a7cb20:algorithmen_und_datenstrukturen/ubungen/ubung6/treap.py
