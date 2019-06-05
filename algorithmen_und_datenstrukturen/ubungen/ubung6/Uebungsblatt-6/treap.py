@@ -264,12 +264,3 @@ class DynamicTreap:
                 continue
             else:
                 return i
-
-
-
-
-
-
-
-
-
