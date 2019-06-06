@@ -430,7 +430,6 @@ def testContainer3():
     for i in range(c.size()):
         assert c[i] == c_old[i]
     assert c[0] == c.first() and c[c.size()-1] == c.last()
-
     print("All tests succeeded")
 
 
