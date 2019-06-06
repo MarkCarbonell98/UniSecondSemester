@@ -5,6 +5,5 @@ def mysqrt(x):
     while y**2!=x:
           y =(y + x/y) / 2
     return y
-    
 print(mysqrt(1))
 
