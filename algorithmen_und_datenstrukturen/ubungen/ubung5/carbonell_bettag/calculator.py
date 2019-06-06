@@ -93,12 +93,39 @@ def evaluateTree(tree):
         return rightEvaluation / leftEvaluation
 
 
-
 infix = '2*4*(3+(4-7)*8)-(1-6)'
 print(convertToPostfix(infix))
 rpn = convertToPostfix(infix)
 print(parse(rpn))
 print(evaluateTree(parse(rpn)))
+
+#aufgabe 2b
+
+# 2 + 5 * 3
+# Baum:
+#       +
+#      / \
+#     2   *
+#        / \
+#       5   3
+#
+
+# 2 * 4 * (3 + (4 - 7) * 8 ) - (1 - 6)
+# Baum:
+#                     -     
+#                  /     \          
+#                 *        -   
+#               /  \     /  \
+#              2    *   1    6
+#                /  \
+#               4   +
+#                 /  \          
+#                3    *          
+#                   /  \         
+#                  8    -         
+#                     / \
+#                    4   7         
+
 
 #TestCases
 import unittest

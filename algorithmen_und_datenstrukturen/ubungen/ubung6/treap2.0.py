@@ -50,6 +50,15 @@ class RandomTreap:
     def __repr__(self):
         return repr(self.root)
 
+    def __depth(self, node):
+        if node is None:
+            return 0
+        else:
+            return max(self.__depth(node.left), self.__depth(node.right)) + 1
+
+    def depth(self):
+        return self.__depth(self.root)
+
 
 class DynamicTreap:
     def __init__(self):
@@ -81,6 +90,15 @@ class DynamicTreap:
 
     def __repr__(self):
         return repr(self.root)
+
+    def __depth(self, node):
+        if node is None:
+            return 0
+        else:
+            return max(self.__depth(node.left), self.__depth(node.right)) + 1
+
+    def depth(self):
+        return self.__depth(self.root)
     
 def treapEqual(t1, t2):
     if t1 == None and t2 == None:
@@ -108,7 +126,7 @@ randomTreap.insert(6* 20)
 randomTreap.insert(-9* 20)
 randomTreap.insert(204* 20)
 randomTreap.insert(-201* 20)
-print(randomTreap.root)
+# print(randomTreap.root)
 
 dynamicTreap = DynamicTreap()
 dynamicTreap.insert(1)
@@ -131,7 +149,62 @@ dynamicTreap.insert(-201* 20)
 dynamicTreap.insert(-201* 20)
 dynamicTreap.insert(-201* 20)
 
-print(dynamicTreap.root)
+# print(dynamicTreap.root)
+
+def equalPriorities(t1, t2):
+    i = t1.root
+    j = t2.root
+    queue1, visited1 = [i], []
+    queue2, visited2 = [j], []
+    while(len(queue1)):
+        i = queue1.pop(0)
+        j = queue2.pop(0)
+        visited1.append(i)
+        visited2.append(j)
+        if i.left:
+            visited1.append(i.left)
+        if i.right:
+            visited1.append(i.right)
+        if j.left:
+            visited1.append(j.left)
+        if j.right:
+            visited1.append(j.right)
+    return visited1 == visited2
+
+# File einlesen und nach Unicode konvertieren (damit Umlaute korrekt sind)
+def createRandomAndDynamicTreap(filename):
+    filename = "die-drei-musketiere.txt"
+    s = open(filename, encoding="latin-1").read()
+    for k in ',;.:-"\'!?':
+        s = s.replace(k, '') # Sonderzeichen entfernen
+    s = s.lower() # Alles klein schreiben
+    text = s.split() # String in Array von Wörtern umwandeln
+
+    rt = RandomTreap()
+    dt = DynamicTreap()
+    for word in text:
+        rt.insert(word)
+        dt.insert(word)
+
+    return rt,dt
+
+dreiMusketiereWords = createRandomAndDynamicTreap('die-drei-musketiere.txt')
+helmholtz = createRandomAndDynamicTreap("helmholtz-naturwissenschaften.txt")
+casanova = createRandomAndDynamicTreap("casanova-erinnerungen-band-2.txt")
+
+print(treapEqual(dreiMusketiereWords[0].root, dreiMusketiereWords[1].roots))
+
+print(treapEqual(helmholtz[0].root helmholtz[1].root))
+
+print(treapEqual(helmholtz[0].root, helmholtz[1].root))
+
+print("Die drei muskeitere enthalt %d verschiede worter", dreiMusketiereWords[0].size)
+print("Helmholtz enthalt %d verschiede worter", helmholtz[0].size)
+print("Casanova enthalt %d verschiede worter", casanova[0].size)
+
+# Ein perfekt balancierter Baum mit n elementen enthalt genau 
+
+
 
 
 
@@ -149,10 +222,13 @@ class TestTreap(unittest.TestCase):
         self.dt2 = DynamicTreap()
 
     def test_insert(self):
-        self.rt.insert(1)
-        self.rt.insert(-1)
-        self.rt.insert(3)
-        self.rt.insert(-4)
+        self.rt.root = Node(2)
+        self.rt.root.left = Node(1)
+        self.rt.root.right = Node(0)
+        self.rt.root.left.left = Node(-1)
+        self.rt.root.left.right = Node(20)
+
+
 
         # assert self.rt.root.key == 1
         # assert self.rt.root.right.key == 3
@@ -161,18 +237,17 @@ class TestTreap(unittest.TestCase):
         # assert self.rt.root.left.left.key == -4
 
     def test_treapEquals(self):
-        self.rt.insert(1)
-        self.rt.insert(-1)
-        self.rt.insert(3)
-        self.rt.insert(-4)
+        self.dt.insert(1)
+        self.dt.insert(-1)
+        self.dt.insert(3)
+        self.dt.insert(-4)
 
-        self.rt2.insert(1)
-        self.rt2.insert(-1)
-        self.rt2.insert(3)
-        self.rt2.insert(-4)
+        self.dt2.insert(1)
+        self.dt2.insert(-1)
+        self.dt2.insert(3)
+        self.dt2.insert(-4)
 
         self.assertTrue(not treapEqual(self.rt.root, self.rt2.root))
-        self.as
 
         self.dt.insert(1)
         self.dt.insert(-1)
