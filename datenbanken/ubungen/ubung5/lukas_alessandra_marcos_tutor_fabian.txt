@@ -100,5 +100,3 @@ Aufgabe 3
  Stratus
  Juli
 (9 rows)
-
-
