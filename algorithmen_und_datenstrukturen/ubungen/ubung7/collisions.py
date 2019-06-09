@@ -8,7 +8,6 @@ def hhash(s):
 # Eine funktion dass alle mogliche Strings bestehend aus 4 charakteren erzeugt. Jedes String kann Groß-und Kleinbuchstaben erhalten, sowie zahlen. Gibt eine Liste zuruck mit alle mogliche Strings
 def createAllPossibleKeys():
     alphabet = [chr(c) for c in range(48,123) if c not in range(91,97) and c not in range(58, 65)]
-    print(alphabet)
     result = []
     for i in range(len(alphabet)):
         for j in range(len(alphabet)):
@@ -21,7 +20,6 @@ def createAllPossibleKeys():
 def getKeysWithCollisionsLength(length):
     # Mit unsere Liste von Strings, konnen wir alle die Hashes fur jeder String suchen, und die in eine andere Liste umschreiben mit der dazugehorige hhash Wert als ein (String, Hash) tupel. Danach werden alle nach dem Wert des Hashes sortiert (*)
     words = createAllPossibleKeys()
-    print(len(words))
     seenHashes = []
     for word in words:
         wordHash = hhash(word)
@@ -43,5 +41,6 @@ def getKeysWithCollisionsLength(length):
     return dict((key,value) for key,value in repeatedHashes.items() if len(value) == length) # (***)
 
 wishedLength = 16
+# Die funktion dauert circa 30sek. um Ergebnisse zu liefern
 print(getKeysWithCollisionsLength(wishedLength))
 
