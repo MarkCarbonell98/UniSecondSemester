@@ -41,6 +41,6 @@ def getKeysWithCollisionsLength(length):
     return dict((key,value) for key,value in repeatedHashes.items() if len(value) == length) # (***)
 
 wishedLength = 16
-# Die funktion dauert circa 30sek. um Ergebnisse zu liefern
+# Die funktion dauert circa 30sek. um Ergebnisse zu liefern. Gibt alle Hash - Schlussel paare zuruck wo der Schlussel set der gewunschte lange hat.
 print(getKeysWithCollisionsLength(wishedLength))
 
