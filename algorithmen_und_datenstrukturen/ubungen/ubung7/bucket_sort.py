@@ -46,7 +46,7 @@ for i in range(len(sortedNaive)-1):
             naiveCountlens.append(naiveCount)
     else:
         naiveCountlens.append(naiveCount)
-        print("Naive Index Count: ", sortedNaive[i], " TOTAL ", sortedNaive[i][0], " = ", naiveCount)
+        print("Normal Index Count: ", sortedNaive[i], " TOTAL ", sortedNaive[i][0], " = ", naiveCount)
         naiveCount = 0
 
 normalCountlens = []   
@@ -111,7 +111,8 @@ def createRandomArray(length):
         arr.append(random.randint(-100,100))
     return arr
 
-def bucketSort(a, bucketMap, d):
+def bucketSort(a, bucketMap, d = 5):
+    if len(a) == 0: return []
     N = len(a)
     M = int(N/float(d))
     
@@ -128,7 +129,6 @@ def bucketSort(a, bucketMap, d):
         end= start+ len(buckets[k])
         a[start:end] = buckets[k]
         start += len(buckets[k])
-    return a
         
 def testBucketSort(unsort):
     sort = sorted(unsort)
@@ -138,6 +138,8 @@ def testBucketSort(unsort):
     else:
         return False
 
+from copy import deepcopy
+
 class bucketSortTests(unittest.TestCase):
     def setUp(self):
         self.testArrays = [
@@ -145,42 +147,17 @@ class bucketSortTests(unittest.TestCase):
             createRandomArray(15),
             createRandomArray(0),
             createRandomArray(5),
-        ]
+        ],
 
     def test_Sorting(self):
-        a = [3,2,9,5,1,7,4]
-        correct = True
-        arrayAfter = bucketSort(a, bucketMap, 5)
-        if len(a) != len(arrayAfter):
-            correct = False
-            print("Ungleiche Länge")
-        else:
-            for i in range(1,len(arrayAfter)):
-                if arrayAfter[i-1] > arrayAfter[i]:
-                    correct = False
-                    print("Nicht sortiert")
-                    break
-        if correct == True:
-            dictfirst = {}
-            dictsecond = {}
-            for i in a:
-                dictfirst[i] = 0
-            for i in arrayAfter:
-                dictsecond[i] = 0
-            for i in a:
-                dictfirst[i] += 1
-            for i in arrayAfter:
-                dictsecond[i] += 1
-            if dictfirst != dictsecond:
-                print("Eine oder mehr Zahlen kommen unterschiedlich häufig vor")
-                correct = False
-        return correct
-
-    def test_sorting2(self):
         for i in range(len(self.testArrays)):
-            actualArray = self.testArrays[i]
-            for j in range(len(actualArray)):
-                sortedArray = bucketSort(actualArray)
+            for j in range(len(self.testArrays[i])):
+                actualArray = self.testArrays[i][j]
+                arrayCopy = deepcopy(actualArray)
+                bucketSort(actualArray, bucketMap)
+                arrayCopyComparison = sorted(arrayCopy)
+                self.assertEqual(len(actualArray), len(arrayCopyComparison), "The list does not have the same length")
+                self.assertListEqual(arrayCopyComparison, actualArray, "The array is not sorted properly")
 
 
 if __name__ == "__main__":
