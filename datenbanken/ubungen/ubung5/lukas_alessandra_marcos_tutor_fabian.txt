@@ -100,3 +100,18 @@ Aufgabe 3
  Stratus
  Juli
 (9 rows)
+
+3. select label, format, count(*) as Anzahl from release where format='CD' group by label, format having count(*)>1500;
+
+        label          | format     | Anzahl
+-----------------------+------------+-------
+ Warner Bros Records   | CD         | 1567
+ Rhino                 | CD         | 1802
+ Capitol Records       | CD         | 1574
+ Columbia Records      | CD         | 3683
+ Epic                  | CD         | 1945
+ Polydor               | CD         | 2440
+ EMI Records           | CD         | 2293
+ Virgin                | CD         | 1827
+ Mercury               | CD         | 2160
+(9 rows)

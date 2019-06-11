@@ -108,20 +108,19 @@ def insertionSort(a):
 def createRandomArray(length):
     arr = []
     for i in range(length):
-        arr.append(random.randint(-100,100))
+        arr.append(random.randint(1,100))
     return arr
 
-def bucketSort(a, bucketMap, d):
+def bucketSort(a, mappingFunction, d):
     if len(a) == 0: return []
     N = len(a)
     M = int(N/float(d))
-    
     buckets = [[]for k in range(M)]
     
     for k in range(len(a)):
-        index = bucketMap(a[k], M)
+        print("mappingFunction ", mappingFunction(a[k], M), a[k], M, 'len(a) ', len(a), 'len(buckets) ', len(buckets))
+        index = mappingFunction(a[k], M)
         buckets[index].append(a[k])
-        
     start = 0
     
     for k in range(M):
@@ -155,7 +154,7 @@ class bucketSortTests(unittest.TestCase):
             for j in range(len(self.testArrays[i])):
                 actualArray = self.testArrays[i][j]
                 arrayCopy = deepcopy(actualArray)
-                bucketSort(actualArray, bucketMap, self.numberOfBuckets)
+                bucketSort(actualArray, bucketMapNaive, self.numberOfBuckets)
                 arrayCopyComparison = sorted(arrayCopy)
                 self.assertEqual(len(actualArray), len(arrayCopyComparison), "The list does not have the same length")
                 self.assertListEqual(arrayCopyComparison, actualArray, "The array is not sorted properly")
