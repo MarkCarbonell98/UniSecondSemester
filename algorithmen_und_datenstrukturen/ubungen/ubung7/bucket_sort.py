@@ -111,7 +111,7 @@ def createRandomArray(length):
         arr.append(random.randint(-100,100))
     return arr
 
-def bucketSort(a, bucketMap, d = 5):
+def bucketSort(a, bucketMap, d):
     if len(a) == 0: return []
     N = len(a)
     M = int(N/float(d))
@@ -148,13 +148,14 @@ class bucketSortTests(unittest.TestCase):
             createRandomArray(0),
             createRandomArray(5),
         ],
+        self.numberOfBuckets = 5
 
     def test_Sorting(self):
         for i in range(len(self.testArrays)):
             for j in range(len(self.testArrays[i])):
                 actualArray = self.testArrays[i][j]
                 arrayCopy = deepcopy(actualArray)
-                bucketSort(actualArray, bucketMap)
+                bucketSort(actualArray, bucketMap, self.numberOfBuckets)
                 arrayCopyComparison = sorted(arrayCopy)
                 self.assertEqual(len(actualArray), len(arrayCopyComparison), "The list does not have the same length")
                 self.assertListEqual(arrayCopyComparison, actualArray, "The array is not sorted properly")
