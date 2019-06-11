@@ -6,7 +6,7 @@ class Node:
         self.key = key
         self.value = value
         self.left = self.right = None
-
+    
     def __repr__(self):
         return f'({self.key}: {self.value})'
 
@@ -120,7 +120,6 @@ def treeEqual(t1, t2):
 
 
 class TreeTests(unittest.TestCase):
-
     def __init__(self, *args):
         super().__init__(*args)
         self.keyValue = 7              # Im Test soll key == value/keyValue sein 
@@ -139,7 +138,6 @@ class TreeTests(unittest.TestCase):
 
     def  buildTree2(self):
         """build an unbalanced test tree"""
-        
         t = Node(0)
         t.right = Node(1)
         t.right.right = Node(2)

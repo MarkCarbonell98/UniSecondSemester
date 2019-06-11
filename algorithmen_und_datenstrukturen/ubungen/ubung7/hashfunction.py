@@ -26,7 +26,6 @@ def createKeys(length):
         index2 = random.randint(0, len(alphabet)-1)
         index3 = random.randint(0, len(alphabet)-1)
         index4 = random.randint(0, len(alphabet)-1)
-        # randomString = alphabet[index1] + alphabet[index2] + alphabet[index3] + alphabet[index4]
         shortString = alphabet[index1] + alphabet[index2] + alphabet[index3] + alphabet[index4]
         newHash = hhash(shortString)
         if newHash == modelHash and not shortString in seen:
@@ -37,6 +36,7 @@ def createKeys(length):
 print(createKeys(10))
 
 
+# 01806555555
 
 # print(hhash("a"))
 # print(hhash("b"))
