@@ -1,0 +1,19 @@
+0G33
+0FHa
+0FJ3
+102J
+0G1a
+0Dx3
+0FIJ
+0Ea3
+1033
+0FGx
+0Dux
+101a
+0DwJ
+0G2J
+0Dva
+100x
+
+Meine Vorgehensweise ist in dem File collisions.py dokumentiert (inkl. Code für einen Besseren Verstandnis).
+Mittels reines Brute Force geschafft.
