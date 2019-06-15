@@ -13,7 +13,7 @@ def rotateRight(root):
     newRoot.right = root
     return newRoot
 
-#aufgabe b
+#Aufgabe b
 class Node:
     def __init__(self, key):
         self.key = key
@@ -58,7 +58,6 @@ class RandomTreap:
 
     def depth(self):
         return self.__depth(self.root)
-
 
 class DynamicTreap:
     def __init__(self):
@@ -114,7 +113,19 @@ class DynamicTreap:
             if i.right:
                 queue.append(i.right)
         return visited
-    
+
+    def __sorted(self, node):
+        if node == None:
+            yield from self.__sorted(node.left)
+            yield node
+            yield from self.__sorted(node.right)
+
+    def sorted(self):
+        return self.__sorted(self.root)
+
+# zip funktion nimmt zwei generators und gibt einen Zahl von einen Generator nach dem anderen. Gleichzeitig
+
+# @given(definiert parametern fuer eine bestimmte funktion)
 def treapEqual(t1, t2):
     if t1 == None and t2 == None:
         return True
@@ -309,3 +320,5 @@ class TestTreap(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# AssertNodeValid, assertNodeEqual, assertTreapValid
