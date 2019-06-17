@@ -101,6 +101,44 @@ Aufgabe 3
  Juli
 (9 rows)
 
+2. select distinct * from songs s where setlist in (select setlist from concert where artist=(select id from artist where name='AC/DC')) and not exists (select name from track where s.name=name);
+ setlist | pos |           name            
+---------+-----+---------------------------
+   76417 |   1 | INTRO- Beavis and Buthead
+(1 row)
+
+Aufgabe 4
+
+1. select c.name, count(*) as n from country c, concert co where co.country=c.id group by c.name order by n desc;
+
+                    name                    |   n   
+--------------------------------------------+-------
+ United States                              | 87756
+ United Kingdom                             | 22819
+ Germany                                    | 14381
+ Canada                                     |  8299
+ France                                     |  5680
+ Japan                                      |  5614
+ Australia                                  |  5554
+ Netherlands                                |  4276
+ Italy                                      |  4033
+ Spain                                      |  3117
+ Sweden                                     |  2816
+ Finland                                    |  2411
+ Belgium                                    |  2124
+ Poland                                     |  2115
+ Brazil                                     |  1883
+
+
+2. select c1.name, count(*) as n from concert c1, concert c2 where c1.eventdate=c2.eventdate and c1.name=c2.name and c1.artist!=c2.artist group by c1.name having count(*)>2000 order by n desc;
+
+         name          |  n   
+-----------------------+------
+ Vans Warped Tour 2012 | 2152
+(1 row)
+
+3.
+
 3. select label, format, count(*) as Anzahl from release where format='CD' group by label, format having count(*)>1500;
 
         label          | format     | Anzahl
