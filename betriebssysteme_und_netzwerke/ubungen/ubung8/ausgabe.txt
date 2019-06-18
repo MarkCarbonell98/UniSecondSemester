@@ -1,0 +1,121 @@
+For the process input:
+p 
+3
+
+r
+4
+
+e
+4 2 2 1
+
+a
+2 1 0 0
+
+C 
+0 0 1 0
+2 0 0 1
+0 1 2 0
+
+R 
+2 0 0 1
+1 0 1 0 
+2 1 0 0
+
+The algorithm generates:
+Reading the contents of data.txt 
+The input data was: 
+
+Process amount = 3
+Ressource amount = 4
+Vector e [ 4,2,2,1 ]
+Vector a [ 2,1,0,0 ]
+Matrix C [ 0,0,1,0,2,0,0,1,0,1,2,0 ]
+Matrix R [ 2,0,0,1,1,0,1,0,2,1,0,0 ]
+
+The reviewed process is 3 and the vector a is 
+[ 2,2,2,0 ]
+The reviewed process is 2 and the vector a is 
+[ 4,2,2,1 ]
+The algorithm has finished with no deadlocks, the final vector a is
+[ 4,2,2,1 ]
+
+
+And for the input: 
+p 
+3
+
+r
+4
+
+e
+4 2 2 1
+
+a
+2 1 0 0
+
+C 
+0 0 1 0
+2 0 0 1
+0 1 2 0
+
+R 
+2 0 0 3
+1 0 1 0
+2 1 0 0
+
+
+The algorithm generates
+Reading the contents of data.deadlock.txt 
+The input data was: 
+
+Process amount = 3
+Ressource amount = 4
+Vector e [ 4,2,2,1 ]
+Vector a [ 2,1,0,0 ]
+Matrix C [ 0,0,1,0,2,0,0,1,0,1,2,0 ]
+Matrix R [ 2,0,0,3,1,0,1,0,2,1,0,0 ]
+
+The reviewed process index is 2 and the vector a is 
+[ 2,1,0,0 ]
+The reviewed process index is 1 and the vector a is 
+[ 2,2,2,0 ]
+A deadlock was found, the involved processes are: [  0, ]
+
+
+And for the input: 
+p 
+3
+
+r
+4
+
+e
+4 2 2 1
+
+a
+2 1 0 0
+
+C 
+0 0 1 0
+2 0 0 1
+0 1 2 0
+
+R 
+2 0 0 1
+1 0 1 0
+2 1 0 1
+
+
+The algorithm generates
+Reading the contents of data.deadlock.txt 
+The input data was: 
+
+Process amount = 3
+Ressource amount = 4
+Vector e [ 4,2,2,1 ]
+Vector a [ 2,1,0,0 ]
+Matrix C [ 0,0,1,0,2,0,0,1,0,1,2,0 ]
+Matrix R [ 2,0,0,3,1,0,1,0,2,1,0,0 ]
+
+A deadlock was found, the involved processes are: [  0, 1, 2 ]
+
