@@ -90,7 +90,6 @@ chi2Test(naiveCountlens, 200)
 
 def insertionSort(a):
     N = len(a)
-    
     for i in range(N):
         current = a[i]
         j = i
