@@ -32,6 +32,13 @@ void write_line_to_vector(int * vec, char * buffer, ssize_t length) {
     }
 }
 
+int vec_every(int * vec, int length, int item) {
+    for(int i = 0; i < length; i++) {
+        if(vec[i] != item) return 0;
+    }
+    return 1;
+}
+
 // this function supposes that both vectors have the same length
 int is_vec_smaller_or_equal(int * vec, int * matrix_vec, int length) {
     for(int i = 0; i < length; i++) {
@@ -40,7 +47,7 @@ int is_vec_smaller_or_equal(int * vec, int * matrix_vec, int length) {
     return 1;
 }
 
-int are_there_smaller_or_equal_processes(int * vec, int * matrix, int matrix_length, int vec_length) {
+int get_smaller_or_equal_processes(int * vec, int * matrix, int matrix_length, int vec_length) {
     int width = matrix_length/vec_length;
     int i, j;
     for(i = 0; i < width; i++) {
@@ -48,11 +55,10 @@ int are_there_smaller_or_equal_processes(int * vec, int * matrix, int matrix_len
         for(j = 0; j < vec_length; j++) {
             test_vec[j] = matrix[j + (i * vec_length)];
         }
-        if(is_vec_smaller_or_equal(vec, test_vec, vec_length)) return 1;
-        print_array(test_vec, vec_length);
+        if (is_vec_smaller_or_equal(vec, test_vec, vec_length)) return i;
         free(test_vec);
     }
-    return 0;
+    return -1;
 }
 
 void print_all_unmarked_processes(int * vec, int length, int mark) {
@@ -121,7 +127,6 @@ int main(int argc, char const *argv[])
     int * new_vector = malloc(MAX_SIZE * sizeof(int));
     int * indexes = malloc(MAX_SIZE * sizeof(int));
 
-    //read data from file
     while ((line_length = getline(&buffer, &buffer_length, fp)) != -1)
     {
         if(line_length > 1) {
@@ -157,32 +162,25 @@ int main(int argc, char const *argv[])
     print_array(matrix_r, process_amount * resource_amount);
     printf("\n");
 
-
-
+    int next_index;
     for(int i = 0; i < process_amount; i++) indexes[i] = i;
-    for(int i = 0; i < process_amount; i++) {
-        for(int j = 0; j < resource_amount; j++) {
-            new_vector[j] = matrix_r[j + (resource_amount * i)];
+    while((next_index = get_smaller_or_equal_processes(vec_a, matrix_r, resource_amount * process_amount, resource_amount)) != -1) {
+        printf("The reviewed process index is %d and the vector a is \n", next_index);
+        print_array(vec_a, resource_amount);
+
+        indexes[next_index] = INFINITY;
+        for(int i = 0; i < resource_amount; i++) {
+            vec_a[i] += matrix_c[i + (resource_amount * next_index)];
+            matrix_r[i + (resource_amount * next_index)] = INFINITY;
         }
-        are_there_smaller_or_equal_processes(vec_a, matrix_r, process_amount * resource_amount, resource_amount);
-        if (is_vec_smaller_or_equal(vec_a, new_vector, resource_amount))
-        {
-            for(int j = 0; j < resource_amount; j++) {
-                vec_a[j] += matrix_c[j + (resource_amount * i)];
-                matrix_r[j + (resource_amount * i)] = INFINITY;
-            }
-            indexes[i] = INFINITY;
-            printf("The reviewed process is %d and the vector a is \n", i + 1);
-            print_array(vec_a, resource_amount);
-            i = 0;
-        } else {
-            if(!are_there_smaller_or_equal_processes(vec_a, matrix_r, process_amount * resource_amount, resource_amount))
-            indexes[i] = INFINITY;
-            printf("The algorithm found a deadlock \n");
-            printf("The involved processes are ");
-            print_all_unmarked_processes(indexes, process_amount, INFINITY);
-            break;
-        }
+        if(vec_a[0] == INFINITY) break;
+    }
+
+    if(!vec_every(indexes, process_amount, INFINITY)) {
+        printf("A deadlock was found, the involved processes are: ");
+        print_all_unmarked_processes(indexes, process_amount, INFINITY);
+    } else {
+        printf("No deadlock was found :) \n");
     }
     free(vec_e);
     free(vec_a);
