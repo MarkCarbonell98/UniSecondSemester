@@ -37,6 +37,8 @@ int main(int argc, char const *argv[])
 
     printf("Reading the contents of %s \n", filename);
 
+    char process_number_id = 'p', resource_number_id = 'r', vector_e_id = 'e', vector_a_id = 'a', matrix_c_id = 'C', matrix_c_id = 'R';
+
     FILE * fp;
     fp = fopen(filename, "r");
     if(fp == NULL) exit(EXIT_FAILURE);

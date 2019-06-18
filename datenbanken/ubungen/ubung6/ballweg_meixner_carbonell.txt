@@ -1,1 +1,25 @@
 Aufgabenblatt 06. VL: Datenbanken  SS 2019
+
+Aufgabe 2a.
+
+ii. select name from artist where type='Person' and exists (select artist from concert where country=(select id from country where name='United States'));
+
+iii. select name from artist where type='Person' and id not in (select artist from concert where country=(select id from country where name='United States')); 
+
+                           name                            
+-----------------------------------------------------------
+ Solex
+ Miles, Robert
+ Gallo, Vincent
+ Serra, Éric
+ Burroughs, William S.
+ Faltermeyer, Harold
+ Chopin, Frédéric
+ Cosby, Bill
+ Williams, John
+ Ives, Burl
+ Crosby, Bing
+ Connick, Harry, Jr.
+ Richard, Cliff
+ von Sneidern, Chris
+ Zimmerman, Richard
