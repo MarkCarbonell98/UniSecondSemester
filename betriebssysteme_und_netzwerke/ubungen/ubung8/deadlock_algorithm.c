@@ -93,7 +93,7 @@ void write_line_to_matrix(int * matrix, char * buffer, size_t buffer_length, FIL
 }
 
 // This algorithm is based on the supposition that the numbers at the data.txt file
-// are written in the following lencoding regarding the character defining the numbers below:
+// are written in the following encoding regarding the character defining the numbers below:
 // p represents # of processes
 // r represents # of resources
 // e represents vector e
@@ -113,7 +113,11 @@ int main(int argc, char const *argv[])
 
     FILE * fp;
     fp = fopen(filename, "r");
-    if(fp == NULL) exit(EXIT_FAILURE);
+    if(fp == NULL) {
+        printf("The file %s was not found \n", filename);
+        perror("Invalid argument");
+        exit(EXIT_FAILURE);
+    }
     char * buffer = NULL;
     size_t buffer_length = 0;
     ssize_t line_length, buffer_line_length;
@@ -167,7 +171,6 @@ int main(int argc, char const *argv[])
     while((next_index = get_smaller_or_equal_processes(vec_a, matrix_r, resource_amount * process_amount, resource_amount)) != -1) {
         printf("The reviewed process index is %d and the vector a is \n", next_index);
         print_array(vec_a, resource_amount);
-
         indexes[next_index] = INFINITY;
         for(int i = 0; i < resource_amount; i++) {
             vec_a[i] += matrix_c[i + (resource_amount * next_index)];
