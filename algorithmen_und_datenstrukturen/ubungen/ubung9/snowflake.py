@@ -29,7 +29,7 @@ class KochSnowflake:
     def __repr__(self):
         result = ""
         for vec in self.sides:
-            result += repr(vec)
+            result += " " + repr(vec)
         return result
 
 snowflake = KochSnowflake(vec1, vec2, vec3)
