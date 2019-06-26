@@ -37,7 +37,7 @@ def kochSnowflake(level):
     else:
         ZR = 0.5 - 0.5j * np.sqrt(3) / 3
         p1 = kochSnowflake(level - 1) 
-        p2 = np.roll(p1, shift=-1)  
+        p2 = np.roll(p1, shift=-1)
         dp = p2 - p1  
         new_points = np.empty(len(p1) * 4, dtype=np.complex128)
         print(new_points, p1, p2, ZR, dp)
@@ -45,7 +45,6 @@ def kochSnowflake(level):
         new_points[1::4] = p1 + dp / 3
         new_points[2::4] = p1 + dp * ZR
         new_points[3::4] = p1 + dp / 3 * 2
-        print(new_points)
         return new_points
 
 def kochSnowflake2(level):

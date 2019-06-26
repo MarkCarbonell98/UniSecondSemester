@@ -140,7 +140,7 @@ int main(int argc, char const *argv[])
                     turn_around_time += old_time;
                 }
                 printf("(order: %d, time: %d)\n", j, all_processes[i][j]);
-                if ((j == process_amount - 1))
+                if (j == process_amount - 1)
                     printf("Total turn around time equals: %d \n\n", turn_around_time / process_amount);
                 if (i == process_array_amount - 1 && j == process_amount - 2)
                     printf("Total turn around time equals: %d \n\n", turn_around_time / (process_amount - 1));
@@ -168,7 +168,7 @@ int main(int argc, char const *argv[])
                 last_element = element_with_shortest_time;
                 printf("(order: %d, time: %d)\n", min_index, element_with_shortest_time);
                 array_copy[min_index] = INFINITY;
-                if ((j == process_amount - 1))
+                if (j == process_amount - 1)
                     printf("Total turn around time equals: %d \n\n", turn_around_time / process_amount);
                 if (i == process_array_amount - 1 && j == process_amount - 2)
                     printf("Total turn around time equals: %d \n\n", turn_around_time / (process_amount - 1));
@@ -208,7 +208,7 @@ int main(int argc, char const *argv[])
                 last_element = element_with_shortest_time;
                 printf("(order: %d, time: %d)\n", min_index, element_with_shortest_time);
                 array_copy[min_index] = INFINITY;
-                if ((j == process_amount - 1))
+                if (j == process_amount - 1)
                     printf("Total turn around time equals: %d \n\n", turn_around_time / process_amount);
                 if (i == process_array_amount - 1 && j == process_amount - 2)
                     printf("Total turn around time equals: %d \n\n", turn_around_time / (process_amount - 1));
