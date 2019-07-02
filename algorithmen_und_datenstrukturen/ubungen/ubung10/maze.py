@@ -20,3 +20,27 @@ for arr in graph:
     arr.sort(reverse=True)
 
 print("Adjazenzlisten: ", graph)
+
+# dfs(graph, 0)
+
+def way_out(graph, startnode, targetnode):
+    visited = [None]*len(graph)
+    deadEnds = [None]*len(graph)
+    def visit(node):
+        isDeadEnd = len(graph[node]) == 1 and node != targetnode and node != startnode
+        if deadEnds[node] != None and deadEnds[node].backtrack:
+            print(node, "backtracking")
+        else:
+            print(node)
+        if node == targetnode:
+            print(targetnode, f"target reached with {12341234}  dead ends")
+        if not visited[node]:
+            visited[node] = True
+            if isDeadEnd:
+                deadEnds[node] = {"node": node, "backtrack": graph[node][0]}
+                print(node, "dead end")
+            for neighbor in graph[node]:
+                visit(neighbor)
+    visit(startnode)
+
+way_out(graph, 0, 15)
