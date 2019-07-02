@@ -1,5 +1,34 @@
 Aufgabenblatt 06. VL: Datenbanken  SS 2019
 
+Aufgabe 1.
+
+with recursive flow as (
+select fluss, muendung from wasserlauf where fluss='Schorte'
+union
+select w.fluss, w.muendung from wasserlauf w inner join flow f on f.muendung=w.fluss
+)
+select * from flow;
+  fluss  | muendung 
+---------+----------
+ Schorte | Ilm
+ Ilm     | Saale
+ Saale   | Elbe
+ Elbe    | Nordsee
+(4 rows)
+
+
+
+b) with recursive flowchart as (
+select fluss, muendung,laenge from wasserlauf where muendung='Schwarzes Meer' group by fluss,muendung,laenge
+union
+select w.fluss, w.muendung, w.laenge+f.laenge from wasserlauf w inner join flowchart f on f.fluss=w.muendung
+)
+select fluss from flowchart where laenge>=(select max(laenge) from flowchart);
+ fluss 
+-------
+ Inn
+(1 row)
+
 Aufgabe 2a.
 
 ii. select name from artist where type='Person' and exists (select artist from concert where country=(select id from country where name='United States'));

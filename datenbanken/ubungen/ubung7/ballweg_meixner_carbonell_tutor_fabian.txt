@@ -1,0 +1,90 @@
+Aufgabe 7.1
+Lukas Ballweg, Alessandra Meixner, Marcos Carbonell
+
+1) select a.name, count(*) as amount from artist a, artist_relation r where r.founder='Y' and r.artist0=a.id group by a.name having count(*)>= 3 order by amount desc;
+
+       name        | amount 
+-------------------+--------
+ Asai, Kenichi     |      6
+ Tzavaras, Vasilis |      4
+ Lohner, Danny     |      4
+ Hein, Peter       |      4
+ Fisher, Adam      |      3
+ Vrenna, Chris     |      3
+ Renders, Koen     |      3
+ Pablo, Morton     |      3
+ Gane, Tim         |      3
+ Kaasinen, Sari    |      3
+ Linnet, Anne      |      3
+ Tibet, David      |      3
+(12 rows)
+
+3) select distinct a1.name, a2.name from 
+artist a1, artist a2, artist_relation r inner join artist_relation r2 on r2.artist1!=r.artist1 where a1.id=r.artist1 and a2.id=r2.artist1 and r.artist0=r2.artist0 and r.type='member of band' and r2.type='member of band' and r.artist1!=r2.artist1 limit 15;
+               name               |          name          
+----------------------------------+------------------------
+ Dalindèo                         | Lepistö & Lehti
+ Operation Ivy                    | MDC
+ Abstrakt Algebra                 | King Diamond
+ Rolling Stones, The              | Faces
+ Metsatöll                        | No-Big-Silence
+ Who, The                         | Free
+ Nirvana                          | 45 Grave
+ Consorzio Suonatori Indipendenti | CCCP Fedeli alla linea
+ Slavenais Rīgas orķestris        | Dull Doll
+ Desaparecidos                    | Bright Eyes
+ Front Line Assembly              | Unit:187
+ Fugazi                           | Skewbald
+ Rocket From the Crypt            | Hot Snakes
+ Helloween                        | Masterplan
+ Agent Steel                      | Obituary
+(15 rows)
+
+2) with data as (select a.name as artistName, c.eventdate, co.name as countryName from artist a, concert c, country co where a.begin_year=1990 and a.type='Group' and co.id=c.country and a.id=c.artist order by a.name, c.eventdate), dates as (select *, row_number() over (partition by d.artistName order by d.eventdate) as rownum from data d) select artistName from dates where rownum=1 and countryName='Germany';
+   artistname    
+-----------------
+ Ace of Base
+ And One
+ Dog Eat Dog
+ Fiddler's Green
+ H-Blockx
+ Hypocrisy
+ Iced Earth
+ Immortal
+ In Flames
+ Subway to Sally
+ Sylvan
+ Welle Erdball
+ Wise Guys
+(13 rows)
+
+
+
+4) select s.name, count(s.name)
+from SONGS s
+where exists(select SONGS
+from SONGS
+  where setlist = s.setlist and pos = s.pos +1 and name = s.name and name is not null)
+group by s.name
+order by count(s.name) desc limit 15
+;
+          name           | count 
+-------------------------+-------
+                         |   307
+ Poker Face              |    36
+ Breathe                 |    17
+ Runaways                |    14
+ We've Got a File on You |    14
+ Beneath the Remains     |    13
+ Bus Stop                |    11
+ King of Snake           |    10
+ Jam                     |     7
+ Guitar Solo             |     7
+ ID                      |     7
+ ?                       |     7
+ Sweet Caroline          |     6
+ Guns for Hire           |     6
+ New Song                |     5
+(15 rows)
+
+
