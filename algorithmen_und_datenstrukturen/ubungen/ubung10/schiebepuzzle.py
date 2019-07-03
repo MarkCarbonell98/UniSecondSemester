@@ -62,55 +62,88 @@ def print_pos(p):
 # aufgabe b
 import random
 
-# topologische Sortierung hat O(E + V) komplexitaet. Also gesamte Komplexitaet ist O(E) 
+# topologische Sortierung hat O(E + V) komplexitaet. aCopylso gesamte Komplexitaet ist O(E) 
 
 def swap(arr,a,b):
     arr[a], arr[b] = arr[b], arr[a]
 
-def shuffle_pos(A, N):
+
+def shuffle_pos(A, N, passedMove=False):
+    aCopy = A.copy()
     lastMove = None
-    puzzleLength = len(A)
+    puzzleLength = len(aCopy)
     sideLength = int(puzzleLength/4)
     for i in range(N):
-        holePosition = A.index(' ')
+        holePosition = aCopy.index(' ')
         move = random.randint(0,3)
-        if move == 0 and lastMove != 2 and (holePosition + 1) + sideLength <= puzzleLength: # up
-            swap(A, holePosition, holePosition + sideLength)
-        elif move == 2 and lastMove != 0 and (holePosition + 1) - sideLength > 0:
-            swap(A, holePosition, holePosition - sideLength)
-        elif move == 3 and lastMove != 1 and ((holePosition) % sideLength) != 0:
-            swap(A, holePosition, holePosition-1)
-        elif move == 1 and lastMove != 3 and ((holePosition + 1) % sideLength) != 0:
-            swap(A, holePosition, holePosition+1)
+        if passedMove != False:
+            move = passedMove
+        if move == 0 and lastMove != 2 and (holePosition + 1) + sideLength <= puzzleLength:
+            swap(aCopy, holePosition, holePosition + sideLength)
+        if move == 2 and lastMove != 0 and (holePosition + 1) - sideLength > 0:
+            swap(aCopy, holePosition, holePosition - sideLength)
+        if move == 3 and lastMove != 1 and ((holePosition) % sideLength) != 0:
+            swap(aCopy, holePosition, holePosition-1)
+        if move == 1 and lastMove != 3 and ((holePosition + 1) % sideLength) != 0:
+            swap(aCopy, holePosition, holePosition+1)
         lastMove = move
+    return aCopy
 
-shuffle_pos(p, 100)
-print_pos(p)
+# shuffle_pos(p, 100)
+# print_pos(p)
 
 # aufgabe c
 
 from collections import deque
 
+def areArraysEqual(a,b):
+    for i in range(len(a)):
+        if a[i] != b[i]:
+            return False
+    return True
+
 def solve_bfs(p, maxlevel):
     parents = [None]*len(p)            
+    solution = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,' ']
     parents = {str(p): p} 
-    print(parents)
-    q = deque()                            # Queue für die zu besuchenden Knoten
+    q = deque()                            
     q.append(p) 
-    counter = 0;                   # Startknoten in die Queue einfügen
-    
-    while len(q) > 0:
-        if counter == maxlevel: break                      # solange noch Knoten zu bearbeiten sind
-        counter += 1
-        puzzle = q.popleft()                 # Knoten aus der Queue nehmen (first in - first out)
-        print_pos(puzzle) 
-        key = str(puzzle)    
-        for neighbor in parents[key]:       # die Nachbarn expandieren
-            if parents[neighbor] is None:  # Nachbar wurde noch nicht besucht
-                parents[neighbor] = puzzle   
-                q.append(neighbor)         #    und in die Queue aufnehmen
+    counter = 0                   
+    print(parents.copy().items())
+    while counter < maxlevel:
+        puzzle = q.popleft()           
+        print(puzzle)
+        if areArraysEqual(solution, puzzle):
+            print("there is a solution!")
+            break;
+        for neighbor in parents.copy().items():   
+            counter += 1
+            nextNeighborUp = shuffle_pos(neighbor[1], 1, 0)
+            nextNeighborDown = shuffle_pos(neighbor[1], 1, 2)
+            nextNeighborLeft = shuffle_pos(neighbor[1], 1, 1)
+            nextNeighborRight = shuffle_pos(neighbor[1], 1, 3)
+            nextNeighborUpDictHash = str(nextNeighborUp)
+            nextNeighborDownDictHash = str(nextNeighborDown)
+            nextNeighborLeftDictHash = str(nextNeighborLeft)
+            nextNeighborRightDictHash = str(nextNeighborRight)
+            if not nextNeighborUpDictHash in parents:
+                parents[nextNeighborUpDictHash] = nextNeighborUp
+                q.append(nextNeighborUp)
+            if not nextNeighborDownDictHash in parents:
+                parents[nextNeighborDownDictHash] = nextNeighborDown
+                q.append(nextNeighborDown)
+            if not nextNeighborLeftDictHash in parents:
+                parents[nextNeighborLeftDictHash] = nextNeighborLeft
+                q.append(nextNeighborLeft)
+            if not nextNeighborRightDictHash in parents:
+                parents[nextNeighborRightDictHash] = nextNeighborRight
+                q.append(nextNeighborRight)
+    print(parents)
 
 
+            # if not parents[neighbor] :  # Nachbar wurde noch nicht besucht
+            #     parents[neighbor] = puzzle   
+            #     q.append(neighbor)         #    und in die Queue aufnehmen
 
-solve_bfs(p, 1000)
-
+shuffledP = shuffle_pos(p, 100)
+solve_bfs(shuffledP, 100)
