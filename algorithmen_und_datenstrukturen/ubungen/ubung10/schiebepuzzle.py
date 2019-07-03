@@ -108,7 +108,7 @@ def solve_bfs(p, maxlevel):
         for neighbor in parents[key]:       # die Nachbarn expandieren
             if parents[neighbor] is None:  # Nachbar wurde noch nicht besucht
                 parents[neighbor] = puzzle   
-                q.append(neighbor)         #    und in die Queue aufnehmen
+                q.append(neighbor)         
 
 
 
