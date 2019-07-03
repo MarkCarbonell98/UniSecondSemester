@@ -92,19 +92,25 @@ print_pos(p)
 from collections import deque
 
 def solve_bfs(p, maxlevel):
-    parents = [None]*len(graph)            
-    parents[startnode] = startnode         
+    parents = [None]*len(p)            
+    parents = {str(p): p} 
+    print(parents)
     q = deque()                            # Queue für die zu besuchenden Knoten
-    q.append(startnode) 
+    q.append(p) 
     counter = 0;                   # Startknoten in die Queue einfügen
     
     while len(q) > 0:
         if counter == maxlevel: break                      # solange noch Knoten zu bearbeiten sind
         counter += 1
-        node = q.popleft()                 # Knoten aus der Queue nehmen (first in - first out)
-        print(node)                        # den Knoten bearbeiten (hier: Knotennummer drucken)
-        for neighbor in graph[node]:       # die Nachbarn expandieren
+        puzzle = q.popleft()                 # Knoten aus der Queue nehmen (first in - first out)
+        print_pos(puzzle) 
+        key = str(puzzle)    
+        for neighbor in parents[key]:       # die Nachbarn expandieren
             if parents[neighbor] is None:  # Nachbar wurde noch nicht besucht
-                parents[neighbor] = node   
+                parents[neighbor] = puzzle   
                 q.append(neighbor)         #    und in die Queue aufnehmen
+
+
+
+solve_bfs(p, 1000)
 
