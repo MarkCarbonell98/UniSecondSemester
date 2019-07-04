@@ -62,6 +62,8 @@ def print_pos(p):
 # aufgabe b
 import random
 
+# topologische Sortierung hat O(E + V) komplexitaet. aCopylso gesamte Komplexitaet ist O(E) 
+
 def swap(arr,a,b):
     arr[a], arr[b] = arr[b], arr[a]
 
@@ -104,6 +106,12 @@ def printPathToSolution(parents,p, solution):
     pathToSolution = []
     numberOfMoves = 0
     nextElement = parents[str(solution)]
+    # while not areArraysEqual(nextElement, solution):
+    #     print_pos(nextElement)
+    #     print(nextElement)
+    #     nextElement = parents[str(nextElement)]
+    #     print(nextElement)
+    #     numberOfMoves += 1
     while not areArraysEqual(nextElement, p):
         print_pos(nextElement)
         nextElement = parents[str(nextElement)]
@@ -150,11 +158,13 @@ def solve_bfs(p, maxlevel):
     return False
 
 shuffledP = shuffle_pos(p, 10)
+
 ausgangstellung = [3,7,11, 4, 2, 5, 6, 8, 1,9, 12, ' ', 13, 10, 14, 15]
-solve_bfs(ausgangstellung, 10000)
-solve_bfs(shuffledP, 10000)
+shuffledP = [1, 2, 3, 4, 5, 6, 7, 8, ' ', 10, 11, 12, 9, 13, 14, 15]
+solve_bfs(ausgangstellung, 1000000)
 
 import unittest
+
 class TestSchiebepuzzle(unittest.TestCase):
     def setUp(self):
         self.p = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ' ']
