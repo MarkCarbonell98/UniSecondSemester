@@ -3,10 +3,9 @@ anchor = list(range(size))
 rank = [0]*size
 print (anchor)
 print (rank)
-[0, 1, 2, 3, 4]
-[0, 0, 0, 0, 0]
+# [0, 1, 2, 3, 4]
+# [0, 0, 0, 0, 0]
 def union(x,y,anchor,rank):
-
 #  find_set ohne Pfadkompression       
     def find_set(x):
         while anchor[x]!=x: #suche bis anchor[x] gleich x ist

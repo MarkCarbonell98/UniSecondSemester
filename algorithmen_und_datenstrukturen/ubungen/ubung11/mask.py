@@ -85,8 +85,41 @@ def createGraph(width, height, mask):
                 adjacencyList.append(newVertex)
     return adjacencyList
 
-
 graph = createGraph(width, height, mask)
 
+def isBackground(arr):
+    for element in arr:
+        if element != 0:
+            return False
+    return True
 
+def connectedComponents(graph):
+    anchors = [0] * len(graph) #equivalent to visited
+    labels = [0] * len(graph)
+
+    currentLabel = 1
+    def visit(node, anchor):
+        stack = [node]
+        while(len(stack)):
+            node = stack.pop(0)
+            if not anchors[node] and not isBackground(graph[node]):
+                anchors[node] = anchor
+                labels[node] = labels[anchor]
+                for neighbor in graph[node]:
+                    if not anchors[neighbor] and not isBackground(graph[neighbor]):
+                        stack.append(neighbor)
+
+    for node in range(len(graph)):
+        if not anchors[node] and not isBackground(graph[node]):
+            labels[node] = currentLabel
+            visit(node, node)
+            currentLabel+= 1
+    return anchors, labels
+
+
+anchors, labels = connectedComponents(graph)
+print(labels)
+# writePGM(width, height, labels, "labeling.pgm")
+
+    
 
