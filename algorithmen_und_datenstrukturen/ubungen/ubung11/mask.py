@@ -87,39 +87,46 @@ def createGraph(width, height, mask):
 
 graph = createGraph(width, height, mask)
 
-def isBackground(arr):
-    for element in arr:
-        if element != 0:
-            return False
-    return True
+
+def union(x,y,anchor,rank):
+#  find_set ohne Pfadkompression       
+    def find_set(x):
+        while anchor[x]!=x: #suche bis anchor[x] gleich x ist
+            x=anchor[x]
+        return x
+#  find_set mit Pfadkompression   
+    # def find_set(x):
+    #     if anchor[x]!=x: #suche bis anchor[x] gleich x ist
+    #         anchor[x]=find_set(anchor[x]) # Pfadkompression
+    #     return anchor[x]
+    
+    def link(x,y):
+        if rank[x] > rank[y]:
+            anchor[y] = x
+        else: 
+            anchor[x] = y
+            if rank[x] == rank[y]:
+                rank[y] += 1
+
+    ax= find_set(x)
+    ay= find_set(y)
+    if ax!=ay:
+        link(ax,ay)
 
 def connectedComponents(graph):
-    anchors = [0] * len(graph) #equivalent to visited
-    labels = [0] * len(graph)
-
-    currentLabel = 1
-    def visit(node, anchor):
-        stack = [node]
-        while(len(stack)):
-            node = stack.pop(0)
-            if not anchors[node] and not isBackground(graph[node]):
-                anchors[node] = anchor
-                labels[node] = labels[anchor]
-                for neighbor in graph[node]:
-                    if not anchors[neighbor] and not isBackground(graph[neighbor]):
-                        stack.append(neighbor)
-
-    for node in range(len(graph)):
-        if not anchors[node] and not isBackground(graph[node]):
-            labels[node] = currentLabel
-            visit(node, node)
-            currentLabel+= 1
-    return anchors, labels
-
+    anchor = list(range(len(graph)))  # anchor = [0,1,2,3, ...]
+    rank = [0]*len(graph)             # rank = [0,0,0,...]  
+    for u in range(len(graph)):       # fuer alle Knoten
+        for v in graph[u]:            # fuer alle adjanzenten Knoten/Kanten
+            if (v > u):               # Es reicht, wenn jede Kante einmal verarbeitet wird
+                union(u,v,anchor,rank)
+    return anchor, rank
 
 anchors, labels = connectedComponents(graph)
+print(anchors)
 print(labels)
-# writePGM(width, height, labels, "labeling.pgm")
+
+writePGM(width, height, labels, "labeling.pgm")
 
     
 
