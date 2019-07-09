@@ -88,45 +88,67 @@ def createGraph(width, height, mask):
 graph = createGraph(width, height, mask)
 
 
-def union(x,y,anchor,rank):
-#  find_set ohne Pfadkompression       
-    def find_set(x):
-        while anchor[x]!=x: #suche bis anchor[x] gleich x ist
-            x=anchor[x]
-        return x
-#  find_set mit Pfadkompression   
-    # def find_set(x):
-    #     if anchor[x]!=x: #suche bis anchor[x] gleich x ist
-    #         anchor[x]=find_set(anchor[x]) # Pfadkompression
-    #     return anchor[x]
-    
-    def link(x,y):
-        if rank[x] > rank[y]:
-            anchor[y] = x
-        else: 
-            anchor[x] = y
-            if rank[x] == rank[y]:
-                rank[y] += 1
-
-    ax= find_set(x)
-    ay= find_set(y)
-    if ax!=ay:
-        link(ax,ay)
+def isBackground(vertex):
+    for weight in vertex:
+        if weight != 0:
+            return False
+    return True
 
 def connectedComponents(graph):
-    anchor = list(range(len(graph)))  # anchor = [0,1,2,3, ...]
-    rank = [0]*len(graph)             # rank = [0,0,0,...]  
-    for u in range(len(graph)):       # fuer alle Knoten
-        for v in graph[u]:            # fuer alle adjanzenten Knoten/Kanten
-            if (v > u):               # Es reicht, wenn jede Kante einmal verarbeitet wird
-                union(u,v,anchor,rank)
-    return anchor, rank
+    anchors = [n for n in range(len(graph))]
+    labels = [0] * len(graph)
+    currentLabel = 0
+    for vertex in anchors:
+        if not labels[vertex]:
+            stack = [vertex]
+            while len(stack) > 0:
+                actualVertex = stack.pop()
+                if not labels[vertex]:
+                    labels[vertex] = currentLabel
+                    anchors[vertex] = vertex
+                print(actualVertex, currentLabel)
+                for neighbor in graph[actualVertex]:
+                    if not labels[neighbor]:
+                        stack.append(neighbor)
+            currentLabel += 1
+    return anchors, labels
+    
+
+
 
 anchors, labels = connectedComponents(graph)
-print(anchors)
-print(labels)
+print(anchors, labels)
 
-writePGM(width, height, labels, "labeling.pgm")
+'''
+for all vertexs in graph
+    currentLabel = 0
+    if label[v] is None:
+        label[v] = currentLabel
+        fuhre DFS mit start v und aus, und setze fur alle besuchte Knoten der label, currentLabel, und anchor[v'] = v (parent node of all visited nodes)
+    currentLabel += 1
+'''
 
+'''
+    Union find
+
+    def findAnchor(node):
+        while anchor[node] != node
+            a = anchor[node]
+        return a
+
+    for vertexs in graph:
+        for u in Nachbarn(v) geschnittent mit {u in V: u > v}
+            a1 = findAnchor(v)
+            a2 = findAnchor(u)
+            getting both anchors
+            if a1 < a2:
+                anchor[a2] = a1
+            else:
+                anchor[a1] = a2
+            if a1 != a2:
+                link(a1,a2)
+
+
+'''
     
 

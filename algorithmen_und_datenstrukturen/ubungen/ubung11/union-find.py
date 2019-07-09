@@ -1,8 +1,8 @@
 size=5
 anchor = list(range(size))
 rank = [0]*size
-print (anchor)
-print (rank)
+# print (anchor)
+# print (rank)
 # [0, 1, 2, 3, 4]
 # [0, 0, 0, 0, 0]
 def union(x,y,anchor,rank):
@@ -32,31 +32,31 @@ def union(x,y,anchor,rank):
         link(ax,ay)
     
 
-union(0,1,anchor,rank)
-print (anchor)
-print (rank)
-# [1, 1, 2, 3, 4]
-# [0, 1, 0, 0, 0]
-union(1,2,anchor,rank)
-print (anchor)
-print (rank)
-# [1, 1, 1, 3, 4]
-# [0, 1, 0, 0, 0]
-union(3,4,anchor,rank)
-print (anchor)
-print (rank)
-# [1, 1, 1, 4, 4]
-# [0, 1, 0, 0, 1]
-union(3,1,anchor,rank)
-print (anchor)
-print (rank)
-# [1, 1, 1, 4, 1]
-# [0, 2, 0, 0, 1]
-union(3,1,anchor,rank)
-print (anchor)
-print (rank)
-# [1, 1, 1, 4, 1]
-# [0, 2, 0, 0, 1]
+# union(0,1,anchor,rank)
+# print (anchor)
+# print (rank)
+# # [1, 1, 2, 3, 4]
+# # [0, 1, 0, 0, 0]
+# union(1,2,anchor,rank)
+# print (anchor)
+# print (rank)
+# # [1, 1, 1, 3, 4]
+# # [0, 1, 0, 0, 0]
+# union(3,4,anchor,rank)
+# print (anchor)
+# print (rank)
+# # [1, 1, 1, 4, 4]
+# # [0, 1, 0, 0, 1]
+# union(3,1,anchor,rank)
+# print (anchor)
+# print (rank)
+# # [1, 1, 1, 4, 1]
+# # [0, 2, 0, 0, 1]
+# union(3,1,anchor,rank)
+# print (anchor)
+# print (rank)
+# # [1, 1, 1, 4, 1]
+# # [0, 2, 0, 0, 1]
 # Zusammenhaengende Komponenten
 graph_2k = [[1], [0,2], [1],     [4,6], [3,5], [4], [3]]
 graph_1k = [[1], [0,2], [1,3], [2,4,6], [3,5], [4], [3]]
