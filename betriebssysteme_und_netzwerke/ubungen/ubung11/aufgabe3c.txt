@@ -1,0 +1,7 @@
+Was wäre, wenn die obigen Programme anstatt Port 7 den Port 80 adressieren würden ( und die Nachricht etwa GET/ lauten würde) ? Ergibt das jeweils Sinn ?
+
+In dem Fall es ist egal ob die Programme den Port 7 addressieren oder nicht. Alle Ports verhalten sich in die selbe Form im laufe einer Verbindung, der Portnummer besagt nur der Port Id wo diese Verbindung stattfinden muss.
+
+Falls der nachricht ein GET Request sein wuerde dann wurde der nachricht einfach als eine String weitergeleitet, genauso wie der String "Hallo welt", wurde der String "GET /" weitergeleteitet da keine HTTP Server als Backend implementiert ist. Er wurde den Header nicht als den Anfang von ein HTTP request lesen, weil er kein HTTP Request erwartet sondern nur eine String, dass in Grossbuchstaben umgewandelt wird, und danach and der Client weitergeleitet. 
+
+In diesem Sinne, die Verbindung auf den Port 80 ist ein Sinnvolles vorschlag. Aber ob der Nachricht etwa "GET /" lautet ist in diesem Fall komplett irrelevant.
