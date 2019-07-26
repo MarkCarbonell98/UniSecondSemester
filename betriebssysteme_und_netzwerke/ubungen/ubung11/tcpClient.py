@@ -13,7 +13,7 @@ while repetitions >= 0:
     clientSocket.send(str.encode(message))
     print("TCP client received send the message: ", message)
     modifiedMessage = clientSocket.recv(2048)
-    print("Received the message: ", modifiedMessage)
+    print("Received the message: ", modifiedMessage.decode())
     clientSocket.close()
     repetitions -= 1
 end = time.time()
